@@ -2,13 +2,13 @@
 //  DTXRemoteProfiler.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 19/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 19/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "DTXProfiler-Private.h"
-#import "DTXSocketConnection.h"
+#import "LNSocketConnection.h"
 
 @class DTXRemoteProfiler;
 
@@ -20,7 +20,7 @@
 
 @interface DTXRemoteProfiler : DTXProfiler
 
-- (instancetype)initWithOpenedSocketConnection:(DTXSocketConnection*)connection remoteProfilerDelegate:(id<DTXRemoteProfilerDelegate>)remoteProfilerDelegate;
+- (instancetype)initWithOpenedSocketConnection:(LNSocketConnection*)connection remoteProfilerDelegate:(id<DTXRemoteProfilerDelegate>)remoteProfilerDelegate;
 
 @property (nonatomic, weak, readonly) id<DTXRemoteProfilerDelegate> remoteProfilerDelegate;
 

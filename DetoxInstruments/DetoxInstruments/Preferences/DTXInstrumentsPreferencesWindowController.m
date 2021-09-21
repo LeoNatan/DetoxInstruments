@@ -2,13 +2,12 @@
 //  DTXInstrumentsPreferencesWindowController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 6/11/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 6/11/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXInstrumentsPreferencesWindowController.h"
 #import "DTXDisplayPreferencesViewController.h"
-#import "DTXCLIPreferencesViewController.h"
 
 @interface DTXInstrumentsPreferencesWindowController ()
 
@@ -32,7 +31,7 @@
 	
 	NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Preferences" bundle:nil];
 	
-	[self setPreferencesViewControllers:@[[sb instantiateControllerWithIdentifier:@"DisplayPreferences"], [sb instantiateControllerWithIdentifier:@"RecordingPreferences"], [sb instantiateControllerWithIdentifier:@"CLIPreferences"]]];
+	[self setPreferencesViewControllers:@[[sb instantiateControllerWithIdentifier:@"DisplayPreferences"], [sb instantiateControllerWithIdentifier:@"RecordingPreferences"]]];
 	
 	self.centerToolbarItems = NO;
 	

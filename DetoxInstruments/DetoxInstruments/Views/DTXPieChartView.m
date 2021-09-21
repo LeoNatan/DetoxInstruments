@@ -2,8 +2,8 @@
 //  DTXPieChartView.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 20/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 20/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPieChartView.h"

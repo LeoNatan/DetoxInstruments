@@ -2,8 +2,8 @@
 //  DTXProfiler.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 18/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 18/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXProfiler-Private.h"
@@ -16,8 +16,6 @@
 #import "DTXNetworkRecorder.h"
 #import "DTXLoggingRecorder.h"
 #import "DTXPollingManager.h"
-#import "DTXReactNativeSampler.h"
-#import "DTXRNJSCSourceMapsSupport.h"
 #import "DTXAddressInfo.h"
 #import "DTXDeviceInfo.h"
 #import "DTXRecording+Additions.h"
@@ -37,7 +35,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 #define DTX_ASSERT_NOT_RECORDING DTXAssert(self.recording == NO, @"A recording is already in progress");
 #define DTX_IGNORE_NOT_RECORDING if(self.recording == NO) { return; }
 
-DTX_CREATE_LOG(Profiler);
+LN_CREATE_LOG(Profiler);
 
 @interface DTXProfiler ()
 
@@ -121,7 +119,7 @@ static uint64_t main_thread_identifier;
 {
 	[self startProfilingWithConfiguration:configuration];
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dtx_dispatch_queue_create_autoreleasing("com.wix.DTXJustForLater", NULL), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXJustForLater", NULL), ^{
 		[self stopProfilingWithCompletionHandler:completionHandler];
 	});
 }
@@ -135,18 +133,17 @@ static uint64_t main_thread_identifier;
 {
 	DTX_ASSERT_NOT_RECORDING
 
-	dtx_log_info(@"Starting profiling");
+	ln_log_info(@"Starting profiling");
 	
 	self.recording = YES;
 	
 	_currentProfilingConfiguration = [configuration copy];
 	
-	if(_currentProfilingConfiguration.recordPerformance == NO && _currentProfilingConfiguration.recordNetwork == NO && _currentProfilingConfiguration.recordEvents == NO && _currentProfilingConfiguration.profileReactNative == NO && _currentProfilingConfiguration.recordActivity == NO)
+	if(_currentProfilingConfiguration.recordPerformance == NO && _currentProfilingConfiguration.recordNetwork == NO && _currentProfilingConfiguration.recordEvents == NO && _currentProfilingConfiguration.recordActivity == NO)
 	{
 		[_currentProfilingConfiguration setValue:@YES forKey:@"recordPerformance"];
 		[_currentProfilingConfiguration setValue:@YES forKey:@"recordNetwork"];
 		[_currentProfilingConfiguration setValue:@YES forKey:@"recordEvents"];
-		[_currentProfilingConfiguration setValue:@YES forKey:@"profileReactNative"];
 	}
 	
 	_pendingSamples = [NSMutableArray new];
@@ -206,9 +203,8 @@ static uint64_t main_thread_identifier;
 			__weak __typeof(self) weakSelf = self;
 			
 			BOOL needsPerformancePolling = self->_currentProfilingConfiguration.recordPerformance;
-			BOOL needsRNPolling = self->_currentRecording.hasReactNative == YES && self->_currentProfilingConfiguration.profileReactNative == YES;
 			
-			if(needsPerformancePolling || needsRNPolling)
+			if(needsPerformancePolling)
 			{
 				self->_pollingManager = [[DTXPollingManager alloc] initWithInterval:self->_currentProfilingConfiguration.samplingInterval];
 			}
@@ -220,22 +216,11 @@ static uint64_t main_thread_identifier;
 				}];
 			}
 			
-			if(needsRNPolling)
-			{
-				DTXReactNativeSampler* rnSampler = [[DTXReactNativeSampler alloc] initWithConfiguration:self->_currentProfilingConfiguration];
-				if(rnSampler != nil)
-				{
-					[self->_pollingManager addPollable:rnSampler handler:^(id<DTXPollable> pollable) {
-						[weakSelf reactNativeSamplerDidPoll:(DTXReactNativeSampler*)pollable];
-					}];
-				}
-			}
-			
 			__DTXProfilerAddActiveProfiler(self);
 			
 			[self->_pollingManager resume];
 			
-			dtx_log_info(@"Started profiling");
+			ln_log_info(@"Started profiling");
 		} qos:QOS_CLASS_USER_INTERACTIVE];
 	}];
 }
@@ -265,26 +250,6 @@ static uint64_t main_thread_identifier;
 	unsymbolicatedSample.stackTraceIsSymbolicated = YES;
 }
 
-- (void)_symbolicateRemainingJavaScriptStackTracesInternal
-{
-	NSPredicate* unsymbolicated = [NSPredicate predicateWithFormat:@"stackTraceIsSymbolicated == NO"];
-	NSFetchRequest* fr = [DTXReactNativePerformanceSample fetchRequest];
-	fr.predicate = unsymbolicated;
-	
-	NSArray<DTXReactNativePerformanceSample*>* unsymbolicatedSamples = [_backgroundContext executeFetchRequest:fr error:NULL];
-	[unsymbolicatedSamples enumerateObjectsUsingBlock:^(DTXReactNativePerformanceSample * _Nonnull unsymbolicatedSample, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self _symbolicateRNPerformanceSample:unsymbolicatedSample];
-	}];
-}
-
-- (void)_symbolicateRNPerformanceSample:(DTXReactNativePerformanceSample *)unsymbolicatedSample
-{
-	BOOL wasSymbolicated = NO;
-	
-	unsymbolicatedSample.stackTrace = DTXRNSymbolicateJSCBacktrace(unsymbolicatedSample.stackTrace, &wasSymbolicated);
-	unsymbolicatedSample.stackTraceIsSymbolicated = wasSymbolicated;
-}
-
 - (void)_addMarkerPerformanceSampleAtTimestamp:(NSDate*)timestamp
 {
 	__kindof DTXPerformanceSample* perfSample;
@@ -311,7 +276,7 @@ static uint64_t main_thread_identifier;
 {
 	DTX_ASSERT_RECORDING
 	
-	dtx_log_info(@"Stopping profiling");
+	ln_log_info(@"Stopping profiling");
 	
 	[_pollingManager suspend];
 	_pollingManager = nil;
@@ -328,14 +293,6 @@ static uint64_t main_thread_identifier;
 		{
 			[self _symbolicateRemainingStackTracesInternal];
 		}
-		
-//		if(self->_currentRecording.hasReactNative
-//		   && self->_currentProfilingConfiguration.profileReactNative == YES
-//		   && self->_currentProfilingConfiguration.collectJavaScriptStackTraces == YES
-//		   && self->_currentProfilingConfiguration.symbolicateJavaScriptStackTraces == YES)
-//		{
-//			[self _symbolicateRemainingJavaScriptStackTracesInternal];
-//		}
 		
 		NSError* err;
 		
@@ -363,7 +320,7 @@ static uint64_t main_thread_identifier;
 		
 		self.recording = NO;
 		
-		dtx_log_info(@"Stopped profiling");
+		ln_log_info(@"Stopped profiling");
 		
 		if(handler != nil)
 		{
@@ -446,7 +403,7 @@ static uint64_t main_thread_identifier;
 		signpostSample.name = name;
 		signpostSample.nameHash = name.sufficientHash;
 		signpostSample.additionalInfoStart = additionalInfo;
-		signpostSample.isTimer = eventType == _DTXEventTypeJSTimer;
+		signpostSample.isTimer = NO;
 		signpostSample.stackTrace = stackTrace;
 		signpostSample.stackTraceIsSymbolicated = NO;
 		signpostSample.startThreadNumber = [self _threadForThreadIdentifier:threadIdentifier].number;
@@ -643,49 +600,6 @@ static uint64_t main_thread_identifier;
 	} qos:QOS_CLASS_USER_INTERACTIVE];
 }
 
-- (void)reactNativeSamplerDidPoll:(DTXReactNativeSampler*) rnSampler
-{
-	DTX_IGNORE_NOT_RECORDING
-	
-	double cpu = rnSampler.cpu;
-	uint64_t bridgeNToJSCallCount = rnSampler.bridgeNToJSCallCount;
-	uint64_t bridgeNToJSCallCountDelta = rnSampler.bridgeNToJSCallCountDelta;
-	uint64_t bridgeJSToNCallCount = rnSampler.bridgeJSToNCallCount;
-	uint64_t bridgeJSToNCallCountDelta = rnSampler.bridgeJSToNCallCountDelta;
-	uint64_t bridgeNToJSDataSize = rnSampler.bridgeNToJSDataSize;
-	uint64_t bridgeNToJSDataSizeDelta = rnSampler.bridgeNToJSDataSizeDelta;
-	uint64_t bridgeJSToNDataSize = rnSampler.bridgeJSToNDataSize;
-	uint64_t bridgeJSToNDataSizeDelta = rnSampler.bridgeJSToNDataSizeDelta;
-	
-	NSArray* stackTrace = [rnSampler.currentStackTrace componentsSeparatedByString:@"\n"];
-	BOOL isSymbolicated = rnSampler.currentStackTraceSymbolicated;
-	
-	NSDate* timestamp = NSDate.date;
-	
-	[_backgroundContext performBlockAndWait:^{
-		DTX_IGNORE_NOT_RECORDING
-		
-		DTXReactNativePerformanceSample* rnPerfSample = [[DTXReactNativePerformanceSample alloc] initWithContext:self->_backgroundContext];
-		rnPerfSample.timestamp = timestamp;
-		rnPerfSample.cpuUsage = cpu;
-		rnPerfSample.bridgeNToJSCallCount = bridgeNToJSCallCount;
-		rnPerfSample.bridgeNToJSCallCountDelta = bridgeNToJSCallCountDelta;
-		rnPerfSample.bridgeJSToNCallCount = bridgeJSToNCallCount;
-		rnPerfSample.bridgeJSToNCallCountDelta = bridgeJSToNCallCountDelta;
-		rnPerfSample.bridgeNToJSDataSize = bridgeNToJSDataSize;
-		rnPerfSample.bridgeNToJSDataSizeDelta = bridgeNToJSDataSizeDelta;
-		rnPerfSample.bridgeJSToNDataSize = bridgeJSToNDataSize;
-		rnPerfSample.bridgeJSToNDataSizeDelta = bridgeJSToNDataSizeDelta;
-		
-		rnPerfSample.stackTrace = stackTrace;
-		rnPerfSample.stackTraceIsSymbolicated = isSymbolicated;
-		
-		[self->_profilerStoryListener addRNPerformanceSample:rnPerfSample];
-		
-		[self _addPendingSampleInternal:rnPerfSample];
-	} qos:QOS_CLASS_USER_INTERACTIVE];
-}
-
 - (void)_addPendingSampleInternal:(DTXSample*)pendingSample
 {
 	if(_awaitsMarkerInsertion)
@@ -802,72 +716,6 @@ static uint64_t main_thread_identifier;
 		[self->_profilerStoryListener finishWithResponseForNetworkSample:networkSample];
 		
 		[self _addPendingSampleInternal:networkSample];
-	} qos:QOS_CLASS_USER_INTERACTIVE];
-}
-
-- (void)_addRNDataFromFunction:(NSString*)function arguments:(NSArray<NSString*>*)arguments returnValue:(NSString*)rv exception:(NSString*)exception isFromNative:(BOOL)isFromNative timestamp:(NSDate*)timestamp;
-{
-	DTX_IGNORE_NOT_RECORDING
-	
-	if(_currentProfilingConfiguration.recordReactNativeBridgeData == NO)
-	{
-		return;
-	}
-	
-	[_backgroundContext performBlock:^{
-		DTX_IGNORE_NOT_RECORDING
-		
-		DTXReactNativeDataSample* rnDataSample = [[DTXReactNativeDataSample alloc] initWithContext:self->_backgroundContext];
-		rnDataSample.timestamp = timestamp;
-		rnDataSample.isFromNative = isFromNative;
-		rnDataSample.function = function;
-		
-		DTXReactNativeBridgeData* bridgeData = [[DTXReactNativeBridgeData alloc] initWithContext:self->_backgroundContext];
-		bridgeData.arguments = arguments;
-		bridgeData.returnValue = rv;
-		bridgeData.exception = exception;
-		
-		rnDataSample.data = bridgeData;
-		
-		[self->_profilerStoryListener addRNBridgeDataSample:rnDataSample];
-		
-		[self _addPendingSampleInternal:rnDataSample];
-	} qos:QOS_CLASS_USER_INTERACTIVE];
-}
-
-- (void)_addRNAsyncStorageOperation:(NSString*)operation fetchCount:(int64_t)fetchCount fetchDuration:(double)fetchDuration saveCount:(int64_t)saveCount saveDuration:(double)saveDuration isDataKeysOnly:(BOOL)isDataKeysOnly data:(NSArray*)_data error:(NSDictionary*)error timestamp:(NSDate*)timestamp
-{
-	DTX_IGNORE_NOT_RECORDING
-	
-	if(_currentProfilingConfiguration.recordReactNativeBridgeData == NO)
-	{
-		return;
-	}
-	
-	[_backgroundContext performBlock:^{
-		DTX_IGNORE_NOT_RECORDING
-		
-		DTXReactNativeAsyncStorageData* data = nil;
-		if(_currentProfilingConfiguration.recordReactNativeAsyncStorageData)
-		{
-			data = [[DTXReactNativeAsyncStorageData alloc] initWithContext:self->_backgroundContext];
-			data.isKeysOnly = isDataKeysOnly;
-			data.data = _data;
-			data.error = error;
-		}
-		
-		DTXReactNativeAsyncStorageSample* sample = [[DTXReactNativeAsyncStorageSample alloc] initWithContext:self->_backgroundContext];
-		sample.timestamp = timestamp;
-		sample.operation = operation;
-		sample.fetchCount = fetchCount;
-		sample.fetchDuration = fetchDuration;
-		sample.saveCount = saveCount;
-		sample.saveDuration = saveDuration;
-		sample.data = data;
-		
-		[self->_profilerStoryListener addRNAsyncStorageSample:sample];
-
-		[self _addPendingSampleInternal:sample];
 	} qos:QOS_CLASS_USER_INTERACTIVE];
 }
 

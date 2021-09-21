@@ -2,8 +2,8 @@
 //  DTXInspectorContentController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 28/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 28/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 @import WebKit;
@@ -83,7 +83,7 @@ static NSString* const DTXInspectorTabKey = @"DTXInspectorTabKey";
 	}
 }
 
-static DTX_ALWAYS_INLINE NSString* __DTXStringFromBoolean(BOOL b)
+static LN_ALWAYS_INLINE NSString* __DTXStringFromBoolean(BOOL b)
 {
 	return b ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @"");
 }
@@ -116,10 +116,7 @@ static DTX_ALWAYS_INLINE NSString* __DTXStringFromBoolean(BOOL b)
 	
 	[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"App Name", @"") description:recording.appName]];
 	[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Process Identifier", @"") description:[NSFormatter.dtx_stringFormatter stringForObjectValue:@(recording.processIdentifier)]]];
-	if(recording.hasReactNative)
-	{
-		[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Has React Native", @"") description:__DTXStringFromBoolean(YES)]];
-	}
+
 	[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Launch Profiling", @"") description:__DTXStringFromBoolean(recording.isLaunchProfiling)]];
 	
 	[content addObject:[DTXInspectorContentRow contentRowWithNewLine]];
@@ -177,16 +174,6 @@ static DTX_ALWAYS_INLINE NSString* __DTXStringFromBoolean(BOOL b)
 //		[content addObject:[DTXInspectorContentRow contentRowWithNewLine]];
 		
 		[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Record Log Output", @"") description:__DTXStringFromBoolean(configuration.recordLogOutput)]];
-		
-//		[content addObject:[DTXInspectorContentRow contentRowWithNewLine]];
-		
-		if(recording.hasReactNative)
-		{
-			[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Profile React Native", @"") description:__DTXStringFromBoolean(configuration.profileReactNative)]];
-			[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Record Bridge Data", @"") description:__DTXStringFromBoolean(configuration.recordReactNativeBridgeData)]];
-			[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Record Timers as Activity", @"") description:__DTXStringFromBoolean(configuration.recordReactNativeTimersAsActivity)]];
-			[content addObject:[DTXInspectorContentRow contentRowWithTitle:NSLocalizedString(@"Record Internal React Native Activity", @"") description:__DTXStringFromBoolean(configuration.recordInternalReactNativeActivity)]];
-		}
 		
 //		[content addObject:[DTXInspectorContentRow contentRowWithNewLine]];
 		

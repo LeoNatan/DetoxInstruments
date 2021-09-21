@@ -2,8 +2,8 @@
 //  DTXRequestHeadersEditor.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/4/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/4/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRequestHeadersEditor.h"
@@ -16,19 +16,19 @@
 
 - (void)setRequestHeaders:(NSDictionary<NSString *,NSString *> *)requestHeaders
 {
-	self.plistEditor.propertyList = requestHeaders;
+	self.plistEditor.propertyListObject = requestHeaders;
 }
 
 - (NSDictionary<NSString *,NSString *> *)requestHeaders
 {
-	return (id)self.plistEditor.propertyList;
+	return (id)self.plistEditor.propertyListObject;
 }
 
 #pragma mark LNPropertyListEditorDelegate
 
 - (id)propertyListEditor:(LNPropertyListEditor *)editor defaultPropertyListForAddingInNode:(LNPropertyListNode*)node
 {
-	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyList:@"Value"];
+	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyListObject:@"Value"];
 	rv.key = @"Header";
 	
 	return rv;

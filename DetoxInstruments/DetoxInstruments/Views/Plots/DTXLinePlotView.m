@@ -2,8 +2,8 @@
 //  DTXLinePlotView.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 1/22/20.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 1/22/20.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXLinePlotView.h"
@@ -18,12 +18,12 @@
 
 @end
 
-static DTX_ALWAYS_INLINE double __DTXValueAtIndex(NSArray<DTXScatterPlotViewPoint*>* points, DTXScatterPlotViewPoint* point, NSUInteger idx, double graphHeightViewRatio, BOOL hideLower)
+static LN_ALWAYS_INLINE double __DTXValueAtIndex(NSArray<DTXScatterPlotViewPoint*>* points, DTXScatterPlotViewPoint* point, NSUInteger idx, double graphHeightViewRatio, BOOL hideLower)
 {
 	return graphHeightViewRatio * point.y;
 }
 
-static DTX_ALWAYS_INLINE void __DTXFlushPath(DTXScatterPlotView* self, NSColor* lineColor, CGContextRef ctx, CGMutablePathRef path, NSUInteger drawingType)
+static LN_ALWAYS_INLINE void __DTXFlushPath(DTXScatterPlotView* self, NSColor* lineColor, CGContextRef ctx, CGMutablePathRef path, NSUInteger drawingType)
 {
 	NSRect selfBounds = self.bounds;
 	NSEdgeInsets insets = self.insets;
@@ -46,7 +46,7 @@ static DTX_ALWAYS_INLINE void __DTXFlushPath(DTXScatterPlotView* self, NSColor* 
 	CGPathRelease(path);
 }
 
-static DTX_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* points, NSColor* fillColor1, NSColor* fillColor2, double fillStartValue, double fillLimitValue, NSColor* lineColor, BOOL dashedLine, CGContextRef ctx)
+static LN_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* points, NSColor* fillColor1, NSColor* fillColor2, double fillStartValue, double fillLimitValue, NSColor* lineColor, BOOL dashedLine, CGContextRef ctx)
 {
 	DTXPlotRange* plotRange = self.plotRange;
 	double maxHeight = (self.heightSynchronizer ? self.heightSynchronizer.maximumPlotHeight : self.maxHeight);
@@ -167,7 +167,7 @@ static DTX_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<
 	super_class(&super, _cmd, dirtyRect);
 }
 
-static DTX_ALWAYS_INLINE double __DTXValueAtPosition(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* _points, double plotClickPosition, NSEdgeInsets insets, BOOL isFlipped, double* delegateClickPosition, double* delegateValue)
+static LN_ALWAYS_INLINE double __DTXValueAtPosition(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* _points, double plotClickPosition, NSEdgeInsets insets, BOOL isFlipped, double* delegateClickPosition, double* delegateValue)
 {
 	double pointRange = _points.lastObject.x - _points.firstObject.x;
 	

@@ -1,36 +1,30 @@
 [submodule "DetoxInstruments/core-plot"]
 	path = DetoxInstruments/core-plot
 	url = https://github.com/core-plot/core-plot.git
-[submodule "DetoxInstruments/LNInterpolation"]
-	path = DetoxInstruments/LNInterpolation
-	url = https://github.com/wix-playground/LNInterpolation.git
-[submodule "Shared/DTXSourceMaps"]
-	path = Shared/DTXSourceMaps
-	url = https://github.com/wix/DTXSourceMaps.git
-[submodule "Shared/DTXSocketConnection"]
-	path = Shared/DTXSocketConnection
-	url=https://github.com/wix/DTXSocketConnection.git
-[submodule "Shared/DTXLoggingInfra"]
-	path = Shared/DTXLoggingInfra
-	url = https://github.com/wix/DTXLoggingInfra.git
 [submodule "DetoxInstruments/Sparkle"]
 	path = DetoxInstruments/Sparkle
 	url = https://github.com/sparkle-project/Sparkle.git
 [submodule "Distribution/homebrew-brew"]
 	path = Distribution/homebrew-brew
-	url = https://github.com/wix/homebrew-brew.git
-[submodule "DetoxInstruments/LNPropertyListEditor"]
-	path = DetoxInstruments/LNPropertyListEditor
-	url = https://github.com/wix-playground/LNPropertyListEditor.git
-[submodule "CLI/ObjCCLIInfra"]
-	path = CLI/ObjCCLIInfra
-	url = https://github.com/wix/ObjCCLIInfra.git
+	url = https://github.com/LeoNatan/homebrew-tap.git
 [submodule "DetoxInstruments/SDWebImage"]
 	path = DetoxInstruments/SDWebImage
 	url = https://LeoNatan@github.com/SDWebImage/SDWebImage.git
 [submodule "Profiler/DetoxSync"]
 	path = Profiler/DetoxSync
 	url = https://github.com/wix/DetoxSync.git
-[submodule "Shared/DTXSwizzlingHelper"]
-	path = Shared/DTXSwizzlingHelper
-	url = https://github.com/wix/DTXObjectiveCHelpers.git
+[submodule "DetoxInstruments/LNInterpolation"]
+	path = DetoxInstruments/LNInterpolation
+	url = https://github.com/LeoNatan/LNInterpolation.git
+[submodule "DetoxInstruments/LNPropertyListEditor"]
+	path = DetoxInstruments/LNPropertyListEditor
+	url = https://github.com/LeoNatan/LNPropertyListEditor.git
+[submodule "Shared/LNSocketConnection"]
+	path = Shared/LNSocketConnection
+	url = https://github.com/LeoNatan/LNSocketConnection.git
+[submodule "Shared/LNObjectiveCHelpers"]
+	path = Shared/LNObjectiveCHelpers
+	url = https://github.com/LeoNatan/LNObjectiveCHelpers.git
+[submodule "Shared/LNLoggingInfra"]
+	path = Shared/LNLoggingInfra
+	url = https://github.com/LeoNatan/LNLoggingInfra.git

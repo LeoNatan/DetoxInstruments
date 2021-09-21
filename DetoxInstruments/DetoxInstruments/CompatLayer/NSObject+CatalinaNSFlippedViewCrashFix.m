@@ -2,16 +2,16 @@
 //  NSObject+CatalinaNSFlippedViewCrashFix.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 9/2/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 9/2/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "NSObject+CatalinaNSFlippedViewCrashFix.h"
 #import <AppKit/AppKit.h>
 @import ObjectiveC;
 
-#import "DTXLogging.h"
-DTX_CREATE_LOG(CatalinaNSFlippedViewCrashFix)
+#import "LNLogging.h"
+LN_CREATE_LOG(CatalinaNSFlippedViewCrashFix)
 
 @interface NSObject ()
 
@@ -44,7 +44,7 @@ DTX_CREATE_LOG(CatalinaNSFlippedViewCrashFix)
 			@try {
 				orig(_self, @selector(drawAtPoint:inContext:), point, ctx);
 			} @catch (NSException *exception) {
-				dtx_log_error(@"Catalina bug: lockFocus");
+				ln_log_error(@"Catalina bug: lockFocus");
 			}
 		}));
 	}

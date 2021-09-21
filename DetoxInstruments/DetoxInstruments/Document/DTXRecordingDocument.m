@@ -2,8 +2,8 @@
 //  DTXRecordingDocument.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 22/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 22/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRecordingDocument.h"
@@ -19,13 +19,13 @@
 #import "DTXRemoteProfilingClient.h"
 #import "DTXRemoteLaunchProfilingClient.h"
 #import "NSFormatter+PlotFormatters.h"
-#import "DTXLogging.h"
+#import "LNLogging.h"
 #import "DTXZipper.h"
 #import "DTXProfilingConfiguration-Private.h"
 #import "DTXHeaderAccessoryViewController.h"
-DTX_CREATE_LOG(RecordingDocument)
+LN_CREATE_LOG(RecordingDocument)
 #else
-#define dtx_log_info(a, b)
+#define ln_log_info(a, b)
 #endif
 #import "AutoCoding.h"
 @import ObjectiveC;
@@ -163,7 +163,7 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 {
 	[self _preparePersistenceContainerFromURL:nil allowCreation:YES error:NULL];
 	NSManagedObjectContext* bgCtx = [_container newBackgroundContext];
-	bgCtx.name = @"com.wix.RemoteProfiling-ManagedObjectContext";
+	bgCtx.name = @"com.LeoNatan.RemoteProfiling-ManagedObjectContext";
 	
 	_remoteProfilingClient = [[DTXRemoteProfilingClient alloc] initWithProfilingTarget:target managedObjectContext:bgCtx];
 	_remoteProfilingClient.delegate = self;
@@ -326,7 +326,7 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 	NSMigrationManager* manager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel destinationModel:targetModel];
 	NSString* localModelName = [[modelPath lastPathComponent] stringByDeletingPathExtension];
 	
-	dtx_log_info(@"Migrating to %@", localModelName);
+	ln_log_info(@"Migrating to %@", localModelName);
 	
 	NSString* storeExtension = sourceStoreURL.pathExtension;
 	NSURL* destinationStoreURL = sourceStoreURL.URLByDeletingPathExtension;
@@ -436,12 +436,12 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 		[[NSFileManager defaultManager] removeItemAtURL:tempURL error:NULL];
 		
 		NSURL* documentsDirURL = [[NSFileManager.defaultManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] URLByAppendingPathComponent:@"Detox Instruments" isDirectory:YES];
-		NSURL* backupURL = [[documentsDirURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@ (Before Migration %@)", url.URLByDeletingPathExtension.lastPathComponent, [df stringFromDate:NSDate.date].stringBySanitizingForFileName]] URLByAppendingPathExtension:url.pathExtension];
+		NSURL* backupURL = [[documentsDirURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@ (Before Migration %@)", url.URLByDeletingPathExtension.lastPathComponent, [df stringFromDate:NSDate.date].ln_stringBySanitizingForFileName]] URLByAppendingPathExtension:url.pathExtension];
 		if([[NSFileManager defaultManager] copyItemAtURL:url toURL:tempURL error:outError] == NO)
 		{
 			return NO;
 		}
-		dtx_defer {
+		ln_defer {
 			[[NSFileManager defaultManager] removeItemAtURL:tempURL error:NULL];
 		};
 		
@@ -519,7 +519,7 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 			return;
 		}
 		
-		dtx_defer {
+		ln_defer {
 			self.documentState = url != nil && _recordings.count != 0 ? DTXRecordingDocumentStateSavedToDisk : DTXRecordingDocumentStateNew;
 		};
 		
@@ -882,7 +882,7 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 - (void)_loadZippedData:(NSData*)zippedData completionHandler:(dispatch_block_t)completionHandler
 {
 	[self autosaveWithImplicitCancellability:YES completionHandler:^(NSError * _Nullable errorOrNil) {
-		dtx_defer {
+		ln_defer {
 			self.localRecordingProfilingState = DTXRecordingLocalRecordingProfilingStateUnknown;
 		};
 		
@@ -947,19 +947,6 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 		self.displayName = [DTXProfilingConfiguration _urlForNewRecordingWithAppName:recording.appName date:recording.startTimestamp].lastPathComponent.stringByDeletingPathExtension;
 		[self.windowControllers.firstObject synchronizeWindowTitleWithDocumentName];
 	}];
-}
-
-- (void)remoteProfilingClient:(DTXRemoteProfilingClient *)client didReceiveSourceMapsData:(NSData *)sourceMapsData
-{
-	NSError* error;
-	NSDictionary<NSString*, id>* sourceMaps = [NSJSONSerialization JSONObjectWithData:sourceMapsData options:0 error:&error];
-	if(sourceMaps == nil)
-	{
-		NSLog(@"Error parsing source maps: %@", error);
-		return;
-	}
-	
-	_sourceMapsParser = [DTXSourceMapsParser sourceMapsParserForSourceMaps:sourceMaps];
 }
 
 - (void)remoteProfilingClient:(DTXRemoteProfilingClient*)client didStopRecordingWithZippedRecordingData:(NSData*)zippedData
@@ -1070,7 +1057,7 @@ static NSTimeInterval _DTXCurrentRecordingTimeLimit(void)
 {
 	[self.windowControllers.firstObject.window.contentViewController dismissViewController:picker];
 	
-	if(configuration.recordActivity == NO && (target.hasReactNative == NO || configuration.profileReactNative == NO || configuration.recordInternalReactNativeActivity == NO))
+	if(configuration.recordActivity == NO)
 	{
 		[self _prepareForRemoteProfilingRecordingWithTarget:target profilingConfiguration:configuration];
 	}

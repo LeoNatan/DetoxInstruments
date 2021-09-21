@@ -18,13 +18,13 @@ while read -r line; do
   REPO_FULL_NAME=`expr "$line" : '^https:\/\/github.com\/\(.*\).git'`
   REPO_NAME=`expr "$REPO_FULL_NAME" : '^.*\/\(.*\)'`
 
-  if [[ $line = *"github.com/wix"* ]]; then
+  if [[ $line = *"github.com/LeoNatan"* ]]; then
     PARENT=$(gh api repos/${REPO_FULL_NAME} | jq -r .parent.full_name)
     
     if [ "$PARENT" != "null" ]; then
       REPO_FULL_NAME="$PARENT"
     else
-      # Skip Wix internal open sources
+      # Skip LeoNatan internal open sources
       continue
     fi
   fi

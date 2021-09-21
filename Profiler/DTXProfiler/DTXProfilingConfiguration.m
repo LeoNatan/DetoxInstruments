@@ -2,8 +2,8 @@
 //  DTXProfilingConfiguration.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 06/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 06/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXProfilingConfiguration-Private.h"
@@ -25,12 +25,7 @@
 @property (nonatomic, readwrite) BOOL recordEvents;
 @property (nonatomic, copy, readwrite) NSSet<NSString*>* ignoredEventCategories;
 @property (nonatomic, readwrite) BOOL recordLogOutput;
-@property (nonatomic, readwrite) BOOL profileReactNative;
-@property (nonatomic, readwrite) BOOL recordReactNativeBridgeData;
-@property (nonatomic, readwrite) BOOL recordReactNativeAsyncStorageData;
-@property (nonatomic, readwrite) BOOL recordReactNativeTimersAsActivity;
 @property (nonatomic, copy, null_resettable, readwrite) NSURL* recordingFileURL;
-@property (nonatomic, readwrite) BOOL recordInternalReactNativeActivity;
 @property (nonatomic, readwrite) NSArray<NSString*>* _ignoredEventCategoriesArray;
 @property (nonatomic, readwrite) BOOL recordActivity;
 
@@ -72,7 +67,6 @@
 	rv->_recordLogOutput = YES;
 	rv->_samplingInterval = 0.5;
 	rv->_numberOfSamplesBeforeFlushToDisk = 200;
-	rv->_profileReactNative = YES;
 	rv->_nonkvc_recordingFileURL = [DTXProfilingConfiguration _urlForNewRecording];
 	rv->_recordEvents = YES;
 	rv->_recordActivity = NO;
@@ -104,16 +98,6 @@
 	if(categoriesArray != nil)
 	{
 		_nonkvc_ignoredEventCategories = [NSSet setWithArray:categoriesArray];
-	}
-	
-	//Support legacy configurations
-	if([aDecoder containsValueForKey:@"recordInternalReactNativeEvents"])
-	{
-		self.recordInternalReactNativeActivity = [aDecoder decodeBoolForKey:@"recordInternalReactNativeEvents"];
-	}
-	if([aDecoder containsValueForKey:@"recordReactNativeTimersAsEvents"])
-	{
-		self.recordReactNativeTimersAsActivity = [aDecoder decodeBoolForKey:@"recordReactNativeTimersAsEvents"];
 	}
 	
 	return self;
@@ -176,7 +160,7 @@
 	return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static NSDateFormatter* _DTXDateFormatterForFileName(void)
 {
 	static NSDateFormatter* dateFileFormatter;
@@ -198,7 +182,7 @@ static NSDateFormatter* _DTXDateFormatterForFileName(void)
 	}
 	
 	NSString* dateString = [_DTXDateFormatterForFileName() stringFromDate:date];
-	return [NSString stringWithFormat:@"%@ %@.dtxrec", appName, dateString.stringBySanitizingForFileName];
+	return [NSString stringWithFormat:@"%@ %@.dtxrec", appName, dateString.ln_stringBySanitizingForFileName];
 }
 
 + (NSURL*)_urlForNewRecordingWithAppName:(NSString*)appName date:(NSDate*)date
@@ -228,20 +212,6 @@ static NSDateFormatter* _DTXDateFormatterForFileName(void)
 
 @end
 
-@implementation DTXProfilingConfiguration (Deprecated)
-
-- (BOOL)recordInternalReactNativeEvents
-{
-	return self.recordInternalReactNativeActivity;
-}
-
-- (BOOL)recordReactNativeTimersAsEvents
-{
-	return self.recordReactNativeTimersAsActivity;
-}
-
-@end
-
 @implementation DTXMutableProfilingConfiguration
 
 @dynamic defaultProfilingConfiguration, defaultProfilingConfigurationForRemoteProfiling;
@@ -259,11 +229,6 @@ static NSDateFormatter* _DTXDateFormatterForFileName(void)
 @dynamic recordEvents;
 @dynamic ignoredEventCategories;
 @dynamic recordLogOutput;
-@dynamic profileReactNative;
-@dynamic recordReactNativeBridgeData;
-@dynamic recordReactNativeAsyncStorageData;
-@dynamic recordReactNativeTimersAsActivity;
-@dynamic recordInternalReactNativeActivity;
 @dynamic recordingFileURL;
 @dynamic recordActivity;
 
@@ -291,30 +256,6 @@ static NSDateFormatter* _DTXDateFormatterForFileName(void)
 	}
 	
 	[super setRecordingFileURL:recordingFileURL];
-}
-
-@end
-
-@implementation DTXMutableProfilingConfiguration (Deprecated)
-
-- (BOOL)recordReactNativeTimersAsEvents
-{
-	return self.recordReactNativeTimersAsActivity;
-}
-
-- (void)setRecordReactNativeTimersAsEvents:(BOOL)recordReactNativeTimersAsEvents
-{
-	self.recordReactNativeTimersAsActivity = recordReactNativeTimersAsEvents;
-}
-
-- (BOOL)recordInternalReactNativeEvents
-{
-	return self.recordInternalReactNativeActivity;
-}
-
-- (void)setRecordInternalReactNativeEvents:(BOOL)recordInternalReactNativeEvents
-{
-	self.recordInternalReactNativeActivity = recordInternalReactNativeEvents;
 }
 
 @end

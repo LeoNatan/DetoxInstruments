@@ -57,35 +57,3 @@ The Activity instrument captures app activity from the system.
 ![Activity](Resources/Instrument_Activity.png "Activity")
 
 For an in-depth look at the Activity instrument, see [Activity Instrument](Instrument_Activity.md).
-
-### JavaScript Thread
-
-The JavaScript Thread instrument captures information about the CPU load of your app's JavaScript thread.
-
-![JavaScript Thread](Resources/Instrument_RNJSThread.png "JavaScript Thread")
-
-For an in-depth look at the JavaScript Thread instrument, see [JavaScript Thread Instrument](Instrument_JavaScriptThread.md).
-
-### Bridge Counters
-
-The Bridge Counters instrument captures information about React Native bridge calls made by your app.
-
-![Bridge Counters](Resources/Instrument_RNBridgeCounters.png "Bridge Counters")
-
-For an in-depth look at the Bridge Counters instrument, see [Bridge Counters Instrument](Instrument_BridgeCounters.md).
-
-### Bridge Data
-
-The Bridge Data instrument captures information about React Native bridge data passed in your app.
-
-![Bridge Data](Resources/Instrument_RNBridgeData.png "Bridge Data")
-
-For an in-depth look at the Bridge Data instrument, see [Bridge Data Instrument](Instrument_BridgeData.md).
-
-### Async Storage
-
-The Async Storage instrument captures information about React Native async storage fetches and saves in the profiled app.
-
-![Async Storage](Resources/Instrument_RNAsyncStorage.png "Async Storage")
-
-For an in-depth look at the Async Storage instrument, see [Async Storage Instrument](Instrument_AsyncStorage.md).

@@ -2,8 +2,8 @@
 //  DTXZipper.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 25/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 25/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXZipper.h"
@@ -13,10 +13,10 @@
 #import "ZipZap.h"
 #endif
 
-#if __has_include("DTXLogging.h")
-#import "DTXLogging.h"
-DTX_CREATE_LOG(DTXZipper)
-#define NSLog dtx_log_error
+#if __has_include("LNLogging.h")
+#import "LNLogging.h"
+LN_CREATE_LOG(DTXZipper)
+#define NSLog ln_log_error
 #endif
 
 NSURL* DTXTempZipURL(void)

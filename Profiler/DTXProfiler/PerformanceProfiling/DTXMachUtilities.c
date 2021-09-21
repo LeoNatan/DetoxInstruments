@@ -2,8 +2,8 @@
 //  DTXMachUtilities.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 04/09/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 04/09/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXMachUtilities.h"
@@ -65,32 +65,32 @@ typedef struct DTXStackFrameEntry
 	const uintptr_t return_address;
 } DTXStackFrameEntry;
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static bool __DTXFillThreadStateIntoMachineContext(thread_t thread, _STRUCT_MCONTEXT *machineContext)
 {
 	mach_msg_type_number_t state_count = DTX_THREAD_STATE_COUNT;
 	return thread_get_state(thread, DTX_THREAD_STATE, (thread_state_t)&machineContext->__ss, &state_count) == KERN_SUCCESS;
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static void* __DTXReadFramePointerRegister(mcontext_t const machineContext)
 {
 	return DTX_MACHINE_CONTEXT_GET_FRAME_POINTER(machineContext);
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static void* __DTXReadInstructionAddressRegister(mcontext_t const machineContext)
 {
 	return DTX_MACHINE_CONTEXT_GET_PROGRAM_COUNTER(machineContext);
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static void* __DTXReadLinkRegister(mcontext_t const machineContext)
 {
 	return DTX_MACHINE_CONTEXT_GET_LINK_REGISTER(machineContext);
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 static kern_return_t __DTXReadMemorySafely(const void *const src, void *const dst, const size_t numBytes)
 {
 	vm_size_t bytesCopied = 0;
@@ -102,7 +102,7 @@ int __DTXCallStackSymbolsForMacThreadInternal_modern(thread_act_t thread, void**
 	return 0;
 }
 
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 int __DTXCallStackSymbolsForMacThreadInternal(thread_act_t thread, void** buffer, int size)
 {
 	int count = 0;

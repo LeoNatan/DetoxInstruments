@@ -2,12 +2,11 @@
 //  DTXDeviceInfo.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 31/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 31/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXDeviceInfo.h"
-#import "DTXReactNativeSampler.h"
 @import UIKit;
 @import Darwin;
 
@@ -103,7 +102,6 @@ extern id MGCopyAnswer(NSString *inKey);
 		deviceDetails[@"deviceMarketingName"] = MGCopyAnswer(@"marketing-name");
 		deviceDetails[@"deviceResolution"] = NSStringFromCGSize(UIScreen.mainScreen.currentMode.size);
 		deviceDetails[@"processIdentifier"] = @(processInfo.processIdentifier);
-		deviceDetails[@"hasReactNative"] = @([DTXReactNativeSampler isReactNativeInstalled]);
 		
 		NSString* version = [NSString stringWithFormat:@"%@.%@", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 		deviceDetails[@"profilerVersion"] = version;

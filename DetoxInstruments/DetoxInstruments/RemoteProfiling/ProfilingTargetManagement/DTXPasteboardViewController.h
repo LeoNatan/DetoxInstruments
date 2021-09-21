@@ -2,8 +2,8 @@
 //  DTXPasteboardViewController.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 4/30/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 4/30/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

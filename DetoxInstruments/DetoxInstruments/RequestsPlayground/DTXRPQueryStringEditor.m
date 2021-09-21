@@ -2,8 +2,8 @@
 //  DTXRPQueryStringEditor.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/6/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/6/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRPQueryStringEditor.h"
@@ -41,14 +41,14 @@
 		[plist setObject:obj.value ?: @"" forKey:obj.name];
 	}];
 	
-	self.plistEditor.propertyList = plist;
+	self.plistEditor.propertyListObject = plist;
 }
 
 - (void)_reloadURLComponents
 {
 	NSMutableArray* queryItems = [NSMutableArray new];
 	
-	[(NSDictionary<NSString*, NSString*>*)self.plistEditor.propertyList enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+	[(NSDictionary<NSString*, NSString*>*)self.plistEditor.propertyListObject enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
 		[queryItems addObject:[NSURLQueryItem queryItemWithName:key value:obj]];
 	}];
 	
@@ -61,7 +61,7 @@
 
 - (id)propertyListEditor:(LNPropertyListEditor *)editor defaultPropertyListForAddingInNode:(LNPropertyListNode*)node
 {
-	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyList:@"Value"];
+	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyListObject:@"Value"];
 	rv.key = @"Query";
 	
 	return rv;

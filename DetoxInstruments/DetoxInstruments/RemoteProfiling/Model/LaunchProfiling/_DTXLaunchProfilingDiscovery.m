@@ -2,8 +2,8 @@
 //  _DTXLaunchProfilingDiscovery.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 12/1/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 12/1/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "_DTXLaunchProfilingDiscovery.h"
@@ -55,7 +55,7 @@
 {
 	DTXRemoteTarget* target = [DTXRemoteTarget new];
 	dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, 0);
-	[target _connectWithHostName:sender.hostName port:sender.port workQueue:dtx_dispatch_queue_create_autoreleasing("com.wix.DTXRemoteProfiler", qosAttribute)];
+	[target _connectWithHostName:sender.hostName port:sender.port workQueue:ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXRemoteProfiler", qosAttribute)];
 	
 	_completionHandler(target);
 	_completionHandler = nil;

@@ -2,14 +2,14 @@
 //  DTXProfiler.pch
 //  StressTestApp
 //
-//  Created by Leo Natan (Wix) on 19/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 19/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #ifndef DTXProfiler_pch
 #define DTXProfiler_pch
 
-#import "DTXLogging.h"
+#import "LNLogging.h"
 #import "SharedPrefixHeader.h"
 #ifdef __OBJC__
 #import "NSMapTable+Subscripting.h"

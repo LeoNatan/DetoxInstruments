@@ -2,8 +2,8 @@
 //  WKViewController.m
 //  StressTestApp
 //
-//  Created by Leo Natan (Wix) on 1/28/20.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 1/28/20.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "WKViewController.h"

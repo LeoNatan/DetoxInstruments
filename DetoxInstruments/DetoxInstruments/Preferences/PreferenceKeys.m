@@ -2,8 +2,8 @@
 //  PreferenceKeys.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 6/13/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 6/13/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -26,24 +26,6 @@ static void initPreferences(void)
 	
 	[NSUserDefaults.standardUserDefaults registerDefaults:@{@"DTXSelectedProfilingConfiguration_recordPerformance": @YES}];
 	[NSUserDefaults.standardUserDefaults registerDefaults:@{@"DTXSelectedProfilingConfiguration_recordEvents": @YES}];
-	
-	if([NSUserDefaults.standardUserDefaults objectForKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeEvents"] != nil)
-	{
-		[NSUserDefaults.standardUserDefaults setBool:[NSUserDefaults.standardUserDefaults boolForKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeEvents"] forKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeActivity"];
-		[NSUserDefaults.standardUserDefaults removeObjectForKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeEvents"];
-	}
-	
-	if([NSUserDefaults.standardUserDefaults objectForKey:@"DTXSelectedProfilingConfiguration_recordReactNativeTimersAsEvents"] != nil)
-	{
-		[NSUserDefaults.standardUserDefaults setBool:[NSUserDefaults.standardUserDefaults boolForKey:@"DTXSelectedProfilingConfiguration_recordReactNativeTimersAsEvents"] forKey:@"DTXSelectedProfilingConfiguration_recordReactNativeTimersAsActivity"];
-		[NSUserDefaults.standardUserDefaults removeObjectForKey:@"DTXSelectedProfilingConfiguration_recordReactNativeTimersAsEvents"];
-	}
-	
-	if([NSUserDefaults.standardUserDefaults boolForKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeEvents"] == YES)
-	{
-		[NSUserDefaults.standardUserDefaults setBool:YES forKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeActivity"];
-		[NSUserDefaults.standardUserDefaults removeObjectForKey:@"DTXSelectedProfilingConfiguration_recordInternalReactNativeEvents"];
-	}
 	
 	[NSUserDefaults.standardUserDefaults registerDefaults:@{DTXPlotSettingsCPUDisplayMTOverlay: @YES, DTXPlotSettingsCPUThreadColorize: @NO, DTXPreferencesAppearanceKey: @0, DTXPlotSettingsIntervalFadeOut:@YES, DTXPlotSettingsDisplayHoverTextAnnotations: @YES, DTXPlotSettingsDisplaySelectionTextAnnotations: @YES, DTXPlotSettingsDisplayLabels: @YES, DTXPreferencesLaunchProfilingDuration: @15.0}];
 	

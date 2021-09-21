@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -38,7 +38,7 @@
                                 <toolbarItem implicitItemIdentifier="C88B62F3-702A-4CBD-8EAF-DF687C481F44" explicitItemIdentifier="TitleToolbarItem" label="" paletteLabel="" sizingBehavior="auto" id="N0I-Xm-YUa">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T7S-3q-2aZ">
-                                        <rect key="frame" x="-6" y="-7" width="512" height="32"/>
+                                        <rect key="frame" x="-7" y="-7" width="514" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="500" id="k4A-LW-shW"/>
                                         </constraints>
@@ -156,31 +156,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="checkForUpdates:" target="Ady-hI-5gd" id="WWN-1b-Rv3"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
-                                        <menuItem title="Command Line Utility Installed At:" enabled="NO" identifier="DTXCLIMoreInfoLabel" id="Opu-Vj-ulF">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="_CLIIntegrationAction:" target="Voe-Tx-rLC" id="GjL-6j-bAa"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="/usr/local/bin/dtxinst" enabled="NO" identifier="DTXCLIMoreInfoPath" indentationLevel="1" id="bhR-7v-Ga4">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="_CLIIntegrationAction:" target="Voe-Tx-rLC" id="RDc-ce-ryS"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Primary CLI" identifier="DTXCLIInstall" id="uoi-0J-cy3">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="_CLIIntegrationAction:" target="Voe-Tx-rLC" id="eBr-20-tu7"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Secondary CLI" alternate="YES" id="ghv-aP-Dic">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                            <connections>
-                                                <action selector="_CLIIntegrationAction:" target="Voe-Tx-rLC" id="PTk-WJ-pHe"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ZMf-s2-onx"/>
@@ -808,7 +783,7 @@ CA
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="6TD-ro-Yv4">
-                            <rect key="frame" x="87" y="19" width="118" height="25"/>
+                            <rect key="frame" x="86" y="19" width="120" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="113" placeholder="YES" id="N0J-eG-xtC"/>
                             </constraints>
@@ -828,7 +803,7 @@ CA
                             </popUpButtonCell>
                         </popUpButton>
                         <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="A51-6N-F8J">
-                            <rect key="frame" x="32" y="25" width="51" height="16"/>
+                            <rect key="frame" x="32" y="26" width="51" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Format:" id="7Wr-AB-JVL">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

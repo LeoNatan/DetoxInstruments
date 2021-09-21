@@ -2,8 +2,8 @@
 //  DTXSample+Additions.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 18/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 18/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXSample+Additions.h"
@@ -24,11 +24,7 @@ static NSDictionary<NSNumber*, Class>* __typeClassMapping;
 							   NSStringFromClass([DTXNetworkSample class]): @(DTXSampleTypeNetwork),
 							   NSStringFromClass([DTXTag class]): @(DTXSampleTypeTag),
 							   NSStringFromClass([DTXLogSample class]): @(DTXSampleTypeLog),
-                               NSStringFromClass([DTXReactNativePerformanceSample class]): @(DTXSampleTypeReactNativePerformanceType),
 							   NSStringFromClass([DTXSignpostSample class]): @(DTXSampleTypeSignpost),
-							   NSStringFromClass([DTXReactNativeDataSample class]): @(DTXSampleTypeReactNativeBridgeDataType),
-							   NSStringFromClass(DTXReactNativeAsyncStorageSample.class):
-								   @(DTXSampleTypeReactNativeAsyncStorageType),
 							   NSStringFromClass([DTXActivitySample class]): @(DTXSampleTypeActivity),
 							   NSStringFromClass([DTXDetoxLifecycleSample class]): @(DTXSampleTypeDetoxLifecycle),
 							   };
@@ -37,11 +33,7 @@ static NSDictionary<NSNumber*, Class>* __typeClassMapping;
 							   @(DTXSampleTypeNetwork): ([DTXNetworkSample class]),
 							   @(DTXSampleTypeTag): ([DTXTag class]),
 							   @(DTXSampleTypeLog): ([DTXLogSample class]),
-							   @(DTXSampleTypeReactNativePerformanceType): ([DTXReactNativePerformanceSample class]),
 							   @(DTXSampleTypeSignpost): ([DTXSignpostSample class]),
-							   @(DTXSampleTypeReactNativeBridgeDataType): ([DTXReactNativeDataSample class]),
-							   @(DTXSampleTypeReactNativeAsyncStorageType):
-								   DTXReactNativeAsyncStorageSample.class,
 							   @(DTXSampleTypeActivity): ([DTXActivitySample class]),
 							   @(DTXSampleTypeDetoxLifecycle): ([DTXDetoxLifecycleSample class]),
 							   };

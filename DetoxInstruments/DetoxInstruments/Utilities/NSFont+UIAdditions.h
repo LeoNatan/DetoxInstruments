@@ -2,8 +2,8 @@
 //  NSFont+UIAdditions.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 6/11/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 6/11/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

@@ -2,8 +2,8 @@
 //  DTXRecordingTargetPickerViewController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 20/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 20/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRecordingTargetPickerViewController.h"
@@ -102,7 +102,7 @@ static NSString* const DTXRecordingTargetPickerLocalOnlyKey = @"DTXRecordingTarg
 	_containerView.layerContentsRedrawPolicy = NSViewLayerContentsRedrawOnSetNeedsDisplay;
 	
 	dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, 0);
-	_workQueue = dtx_dispatch_queue_create_autoreleasing("com.wix.DTXRemoteProfiler", qosAttribute);
+	_workQueue = ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXRemoteProfiler", qosAttribute);
 	
 	_browser = [NSNetServiceBrowser new];
 //	_browser.includesPeerToPeer = YES;
@@ -796,13 +796,6 @@ static NSString* const DTXRecordingTargetPickerLocalOnlyKey = @"DTXRecordingTarg
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[[_targetManagementControllers objectForKey:target] noteProfilingTargetDidLoadPasteboardContents];
-	});
-}
-
-- (void)profilingTarget:(DTXRemoteTarget *)target didLoadAsyncStorage:(NSDictionary *)asyncStorage
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[[_targetManagementControllers objectForKey:target] noteProfilingTargetDidLoadAsyncStorage];
 	});
 }
 

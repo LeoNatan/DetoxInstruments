@@ -38,7 +38,7 @@ You'll need to perform the following steps for each target that you wish to inte
 
 	if [ -z "$EXPLICIT_INSTRUMENTS_APP_PATH" ]; then
 	  # Find where the Detox Instruments app is installed
-	  INSTRUMENTS_APP_PATH=$(mdfind kMDItemCFBundleIdentifier="com.wix.DetoxInstruments" | head -n 1)
+	  INSTRUMENTS_APP_PATH=$(mdfind kMDItemCFBundleIdentifier="com.LeoNatan.DetoxInstruments" | head -n 1)
 	else
 	  INSTRUMENTS_APP_PATH="$EXPLICIT_INSTRUMENTS_APP_PATH"
 	fi
@@ -72,7 +72,7 @@ You'll need to perform the following steps for each target that you wish to inte
   
   if [ -z "$EXPLICIT_INSTRUMENTS_APP_PATH" ]; then
     # Find where the Detox Instruments app is installed
-    INSTRUMENTS_APP_PATH=$(mdfind kMDItemCFBundleIdentifier="com.wix.DetoxInstruments" | head -n 1)
+    INSTRUMENTS_APP_PATH=$(mdfind kMDItemCFBundleIdentifier="com.LeoNatan.DetoxInstruments" | head -n 1)
   else
     INSTRUMENTS_APP_PATH="$EXPLICIT_INSTRUMENTS_APP_PATH"
   fi

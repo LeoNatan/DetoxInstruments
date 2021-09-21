@@ -2,8 +2,8 @@
 //  DTXLogDataProvider.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 17/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 17/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXLogDataProvider.h"
@@ -318,7 +318,7 @@
 
 - (void)filterSamplesWithFilter:(NSString*)filter;
 {
-	NSString* _filter = [filter stringByTrimmingWhiteSpace];
+	NSString* _filter = [filter ln_stringByTrimmingWhiteSpace];
 	
 	_frc.fetchRequest.predicate = [self predicateForFilter:_filter];
 	[_frc performFetch:NULL];

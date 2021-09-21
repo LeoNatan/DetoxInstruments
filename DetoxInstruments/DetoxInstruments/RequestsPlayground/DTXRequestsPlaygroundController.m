@@ -2,8 +2,8 @@
 //  DTXRequestsPlaygroundController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/3/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/3/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRequestsPlaygroundController.h"
@@ -250,8 +250,8 @@ static NSString* const __codeSnippetKey = @"DTXRequestsPlaygroundController.code
 	NSMutableDictionary* cookies = [NSMutableDictionary new];
 	[splitCookies enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSArray<NSString*>* components = [obj componentsSeparatedByString:@"="];
-		NSString* key = components.firstObject.stringByTrimmingWhiteSpace;
-		NSString* value = components.count < 2 ? @"" : components.lastObject.stringByTrimmingWhiteSpace;
+		NSString* key = components.firstObject.ln_stringByTrimmingWhiteSpace;
+		NSString* value = components.count < 2 ? @"" : components.lastObject.ln_stringByTrimmingWhiteSpace;
 		if(value.length > 0 || key.length > 0)
 		{
 			[cookies setValue:value forKey:key];

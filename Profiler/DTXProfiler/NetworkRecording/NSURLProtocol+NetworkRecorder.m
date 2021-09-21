@@ -2,8 +2,8 @@
 //  NSURLProtocol+NetworkRecorder.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 2/24/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 2/24/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "NSURLProtocol+NetworkRecorder.h"
@@ -17,7 +17,7 @@ static NSArray *__DTXClassGetSubclasses(Class parentClass, SEL sel)
 	__block Class* classes = NULL;
 	
 	classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * numClasses);
-	dtx_defer {
+	ln_defer {
 		free(classes);
 	};
 	numClasses = objc_getClassList(classes, numClasses);
@@ -39,7 +39,7 @@ static NSArray *__DTXClassGetSubclasses(Class parentClass, SEL sel)
 		
 		unsigned int numMethods = 0;
 		__block Method* methods = class_copyMethodList(classes[i], &numMethods);
-		dtx_defer {
+		ln_defer {
 			free(methods);
 		};
 

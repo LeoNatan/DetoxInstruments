@@ -2,8 +2,8 @@
 //  DTXThreadInfo+UIExtensions.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 4/24/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 4/24/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXThreadInfo+UIExtensions.h"
@@ -20,11 +20,11 @@ static void* THREAD_MAPPING = &THREAD_MAPPING;
 
 + (DTXThreadInfo*)threadInfoForThreadNumber:(int64_t)threadNumber inManagedObjectContext:(NSManagedObjectContext*)ctx
 {
-	NSMutableDictionary* mapping = [ctx dtx_attachedObjectForKey:THREAD_MAPPING];
+	NSMutableDictionary* mapping = [ctx ln_attachedObjectForKey:THREAD_MAPPING];
 	if(mapping == nil)
 	{
 		mapping = [NSMutableDictionary new];
-		[ctx dtx_attachObject:mapping forKey:THREAD_MAPPING];
+		[ctx ln_attachObject:mapping forKey:THREAD_MAPPING];
 	}
 	
 	DTXThreadInfo* rv = mapping[@(threadNumber)];

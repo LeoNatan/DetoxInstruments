@@ -2,8 +2,8 @@
 //  NSURLConnection+DTXLegacyConnectionRecording.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 10/21/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 10/21/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "NSURLConnection+DTXLegacyConnectionRecording.h"
@@ -26,14 +26,14 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 
 - (nullable NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(nullable NSURLResponse *)response
 {
-	if([[self dtx_attachedObjectForKey:__DTXConnectionDidStart] boolValue] == NO)
+	if([[self ln_attachedObjectForKey:__DTXConnectionDidStart] boolValue] == NO)
 	{
-		__DTXProfilerMarkNetworkRequestBegin(request, [connection dtx_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
-		[self dtx_attachObject:@YES forKey:__DTXConnectionDidStart];
+		__DTXProfilerMarkNetworkRequestBegin(request, [connection ln_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
+		[self ln_attachObject:@YES forKey:__DTXConnectionDidStart];
 	}
 	
 	NSURLRequest* rv = request;
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connection:willSendRequest:redirectResponse:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -48,12 +48,12 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 {
 	if(error != nil)
 	{
-		[self dtx_attachObject:@YES forKey:__DTXConnectionDidFail];
+		[self ln_attachObject:@YES forKey:__DTXConnectionDidFail];
 		
-		__DTXProfilerMarkNetworkResponseEnd([self dtx_attachedObjectForKey:__DTXConnectionResponse], [self dtx_attachedObjectForKey:__DTXConnectionData], error, [connection dtx_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
+		__DTXProfilerMarkNetworkResponseEnd([self ln_attachedObjectForKey:__DTXConnectionResponse], [self ln_attachedObjectForKey:__DTXConnectionData], error, [connection ln_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
 	}
 	
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connection:didFailWithError:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -65,9 +65,9 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	[self dtx_attachObject:[response copy] forKey:__DTXConnectionResponse];
+	[self ln_attachObject:[response copy] forKey:__DTXConnectionResponse];
 	
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connection:didReceiveResponse:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -79,7 +79,7 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 
 - (void)__dtx_appendAttachedData:(NSData*)data
 {
-	NSMutableData* aggregatedData = [self dtx_attachedObjectForKey:__DTXConnectionData];
+	NSMutableData* aggregatedData = [self ln_attachedObjectForKey:__DTXConnectionData];
 	if(aggregatedData == nil)
 	{
 		aggregatedData = [NSMutableData new];
@@ -87,14 +87,14 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 	
 	[aggregatedData appendData:data];
 	
-	[self dtx_attachObject:aggregatedData forKey:__DTXConnectionData];
+	[self ln_attachObject:aggregatedData forKey:__DTXConnectionData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data lengthReceived:(long long)lengthReceived
 {
 	[self __dtx_appendAttachedData:data];
 	
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connection:didReceiveData:lengthReceived:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -114,7 +114,7 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 {
 	[self __dtx_appendAttachedData:data];
 	
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connection:didReceiveData:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -126,12 +126,12 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	if([[self dtx_attachedObjectForKey:__DTXConnectionDidFail] boolValue] == NO)
+	if([[self ln_attachedObjectForKey:__DTXConnectionDidFail] boolValue] == NO)
 	{
-		__DTXProfilerMarkNetworkResponseEnd([self dtx_attachedObjectForKey:__DTXConnectionResponse], [self dtx_attachedObjectForKey:__DTXConnectionData], nil, [connection dtx_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
+		__DTXProfilerMarkNetworkResponseEnd([self ln_attachedObjectForKey:__DTXConnectionResponse], [self ln_attachedObjectForKey:__DTXConnectionData], nil, [connection ln_attachedObjectForKey:__DTXConnectionUnique], NSDate.date);
 	}
 	
-	Class superclass = DTXDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
+	Class superclass = LNDynamicSubclassSuper(self, __DTX_DelegateProxy.class);
 	SEL cmd = @selector(connectionDidFinishLoading:);
 	if([superclass instancesRespondToSelector:cmd])
 	{
@@ -156,7 +156,7 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSError* error;
-		DTXSwizzleMethod(self, @selector(_initWithRequest:delegate:usesCache:maxContentLength:startImmediately:connectionProperties:), @selector(_initWithRequest___dtx:delegate:usesCache:maxContentLength:startImmediately:connectionProperties:), &error);
+		LNSwizzleMethod(self, @selector(_initWithRequest:delegate:usesCache:maxContentLength:startImmediately:connectionProperties:), @selector(_initWithRequest___dtx:delegate:usesCache:maxContentLength:startImmediately:connectionProperties:), &error);
 	});
 }
 
@@ -164,7 +164,7 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 {
 	if(origDelegate != nil)
 	{
-		DTXDynamicallySubclass(origDelegate, __DTX_DelegateProxy.class);
+		LNDynamicallySubclass(origDelegate, __DTX_DelegateProxy.class);
 	}
 	
 	if(origDelegate == nil)
@@ -182,7 +182,7 @@ static void* __DTXConnectionData = &__DTXConnectionData;
 	
 	self = [self _initWithRequest___dtx:arg1_ delegate:origDelegate usesCache:arg3 maxContentLength:arg4 startImmediately:arg5 connectionProperties:arg6];
 	
-	[self dtx_attachObject:[NSProcessInfo processInfo].globallyUniqueString forKey:__DTXConnectionUnique];
+	[self ln_attachObject:[NSProcessInfo processInfo].globallyUniqueString forKey:__DTXConnectionUnique];
 	
 	return self;
 }

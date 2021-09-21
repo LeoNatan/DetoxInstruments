@@ -83,16 +83,6 @@ void DTXProfilerMarkEvent(NSString* category, NSString* name, DTXEventStatus eve
 //	__DTXProfilerMarkEvent(NSDate.date, category, name, eventStatus, message, _DTXEventTypeActivity);
 //}
 
-DTXEventIdentifier DTXProfilerMarkDetoxLifecycleIntervalBegin(NSString* category, NSString* name, NSString* __nullable startMessage)
-{
-	return __DTXProfilerMarkEventIntervalBegin(NSDate.date, category, name, startMessage, _DTXEventTypeDetoxLifecycle, nil);
-}
-
-void DTXProfilerMarkDetoxLifecycleEvent(NSString* category, NSString* name, DTXEventStatus eventStatus, NSString* __nullable message)
-{
-	__DTXProfilerMarkEvent(NSDate.date, category, name, eventStatus, message, _DTXEventTypeDetoxLifecycle);
-}
-
 __attribute__((destructor))
 static void _bestEffortStopActiveProfilers()
 {

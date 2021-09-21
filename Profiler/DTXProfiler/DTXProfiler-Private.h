@@ -2,8 +2,8 @@
 //  DTXProfiler-Private.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 19/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 19/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXProfilingBasics.h"
@@ -18,9 +18,6 @@ typedef NS_ENUM(NSUInteger, _DTXEventType)
 {
 	_DTXEventTypeSignpost,
 	_DTXEventTypeActivity,
-	_DTXEventTypeDetoxLifecycle,
-	_DTXEventTypeJSTimer,
-	_DTXEventTypeInternalRN
 };
 
 DTX_ALWAYS_INLINE
@@ -31,28 +28,12 @@ static Class _DTXClassForEventType(_DTXEventType eventType)
 			return DTXSignpostSample.class;
 		case _DTXEventTypeActivity:
 			return DTXActivitySample.class;
-		case _DTXEventTypeDetoxLifecycle:
-			return DTXDetoxLifecycleSample.class;
-		case _DTXEventTypeJSTimer:
-			return DTXActivitySample.class;
-		case _DTXEventTypeInternalRN:
-			return DTXActivitySample.class;
 	}
 }
 
 DTX_ALWAYS_INLINE
 static BOOL _DTXShouldIgnoreEvent(_DTXEventType eventType, NSString* category, DTXProfilingConfiguration* config)
 {
-	if(eventType == _DTXEventTypeJSTimer && config.recordReactNativeTimersAsActivity == NO)
-	{
-		return YES;
-	}
-	
-	if(eventType == _DTXEventTypeInternalRN && config.recordInternalReactNativeActivity == NO)
-	{
-		return NO;
-	}
-	
 	if(eventType == _DTXEventTypeActivity && config.recordActivity == NO)
 	{
 		return YES;
@@ -80,7 +61,6 @@ static BOOL _DTXShouldIgnoreEvent(_DTXEventType eventType, NSString* category, D
 @property (nonatomic) BOOL _cleanForDemo;
 
 - (void)_symbolicatePerformanceSample:(DTXPerformanceSample*)sample;
-- (void)_symbolicateRNPerformanceSample:(DTXReactNativePerformanceSample*)sample;
 
 - (DTXThreadInfo*)_threadForThreadIdentifier:(uint64_t)identifier;
 
@@ -94,7 +74,5 @@ static BOOL _DTXShouldIgnoreEvent(_DTXEventType eventType, NSString* category, D
 - (void)_markEventWithIdentifier:(NSString*)identifier category:(NSString*)category name:(NSString*)name eventStatus:(DTXEventStatus)eventStatus additionalInfo:(NSString*)additionalInfo eventType:(_DTXEventType)eventType threadIdentifier:(uint64_t)threadIdentifier timestamp:(NSDate*)timestamp;
 - (void)_networkRecorderDidStartRequest:(NSURLRequest*)request cookieHeaders:(NSDictionary<NSString*, NSString*>*)cookieHeaders userAgent:(NSString*)userAgent uniqueIdentifier:(NSString*)uniqueIdentifier timestamp:(NSDate*)timestamp;
 - (void)_networkRecorderDidFinishWithResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error forRequestWithUniqueIdentifier:(NSString*)uniqueIdentifier timestamp:(NSDate*)timestamp;
-- (void)_addRNDataFromFunction:(NSString*)function arguments:(NSArray<NSString*>*)arguments returnValue:(NSString*)rv exception:(NSString*)exception isFromNative:(BOOL)isFromNative timestamp:(NSDate*)timestamp;
-- (void)_addRNAsyncStorageOperation:(NSString*)operation fetchCount:(int64_t)fetchCount fetchDuration:(double)fetchDuration saveCount:(int64_t)saveCount saveDuration:(double)saveDuration isDataKeysOnly:(BOOL)isDataKeysOnly data:(NSArray*)data error:(NSDictionary*)error timestamp:(NSDate*)timestamp;
 
 @end

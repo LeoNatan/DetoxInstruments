@@ -2,8 +2,8 @@
 //  DTXScatterPlotView.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 12/30/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 12/30/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXScatterPlotView-Private.h"
@@ -16,7 +16,7 @@
 
 @end
 
-static DTX_ALWAYS_INLINE double __DTXValueAtIndex(NSArray<DTXScatterPlotViewPoint*>* points, DTXScatterPlotViewPoint* point, double test, NSUInteger idx, double graphHeightViewRatio, BOOL hideLower)
+static LN_ALWAYS_INLINE double __DTXValueAtIndex(NSArray<DTXScatterPlotViewPoint*>* points, DTXScatterPlotViewPoint* point, double test, NSUInteger idx, double graphHeightViewRatio, BOOL hideLower)
 {
 	double rv;
 	
@@ -43,7 +43,7 @@ static DTX_ALWAYS_INLINE double __DTXValueAtIndex(NSArray<DTXScatterPlotViewPoin
 	return rv;
 }
 
-static DTX_ALWAYS_INLINE void __DTXStartPaths(CGMutablePathRef* closedPath, CGMutablePathRef* openPath, NSEdgeInsets insets, BOOL isFlipped, CGFloat position, CGFloat value, BOOL isStepped)
+static LN_ALWAYS_INLINE void __DTXStartPaths(CGMutablePathRef* closedPath, CGMutablePathRef* openPath, NSEdgeInsets insets, BOOL isFlipped, CGFloat position, CGFloat value, BOOL isStepped)
 {
 	*closedPath = CGPathCreateMutable();
 	*openPath = CGPathCreateMutable();
@@ -52,7 +52,7 @@ static DTX_ALWAYS_INLINE void __DTXStartPaths(CGMutablePathRef* closedPath, CGMu
 	CGPathMoveToPoint(*openPath, NULL, position, value);
 }
 
-static DTX_ALWAYS_INLINE void __DTXFlushPaths(DTXScatterPlotView* self, NSColor* fillColor1, NSColor* fillColor2, NSColor* lineColor, CGContextRef ctx, CGMutablePathRef closedPath, CGMutablePathRef openPath, CGFloat position, NSUInteger drawingType, BOOL dashedLine, double fillStart, double fillLimit)
+static LN_ALWAYS_INLINE void __DTXFlushPaths(DTXScatterPlotView* self, NSColor* fillColor1, NSColor* fillColor2, NSColor* lineColor, CGContextRef ctx, CGMutablePathRef closedPath, CGMutablePathRef openPath, CGFloat position, NSUInteger drawingType, BOOL dashedLine, double fillStart, double fillLimit)
 {
 	CGPathAddLineToPoint(closedPath, NULL, position, __DTXBottomInset(self.insets, self.isFlipped));
 	
@@ -105,7 +105,7 @@ static DTX_ALWAYS_INLINE void __DTXFlushPaths(DTXScatterPlotView* self, NSColor*
 	CGPathRelease(openPath);
 }
 
-static DTX_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* points, NSColor* fillColor1, NSColor* fillColor2, double fillStartValue, double fillLimitValue, NSColor* lineColor, BOOL dashedLine, CGContextRef ctx)
+static LN_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* points, NSColor* fillColor1, NSColor* fillColor2, double fillStartValue, double fillLimitValue, NSColor* lineColor, BOOL dashedLine, CGContextRef ctx)
 {
 	DTXPlotRange* plotRange = self.plotRange;
 	double maxHeight = (self.heightSynchronizer ? self.heightSynchronizer.maximumPlotHeight : self.maxHeight);
@@ -462,7 +462,7 @@ static DTX_ALWAYS_INLINE void __DTXDrawPoints(DTXScatterPlotView* self, NSArray<
 	//	NSLog(@"Took %@s to add %u samples", @(end - start), numberOfPoints);
 }
 
-static DTX_ALWAYS_INLINE double __DTXValueAtPosition(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* _points, double plotClickPosition, BOOL isStepped, NSEdgeInsets insets, BOOL isFlipped, BOOL exact, double* delegateClickPosition, double* delegateValue)
+static LN_ALWAYS_INLINE double __DTXValueAtPosition(DTXScatterPlotView* self, NSArray<DTXScatterPlotViewPoint*>* _points, double plotClickPosition, BOOL isStepped, NSEdgeInsets insets, BOOL isFlipped, BOOL exact, double* delegateClickPosition, double* delegateValue)
 {
 	double pointRange = _points.lastObject.x - _points.firstObject.x;
 	

@@ -41,7 +41,7 @@ ul { padding-left: 1.3em; }
 <p>It is recommended to start with the default value and only increase sampling frequency if necessary.</p>
 <h3>
 <a name="user-content-performance" class="anchor" href="#performance"><span class="octicon octicon-link"></span></a>Performance</h3>
-<p>The <strong>Record performance</strong> preference controls whether performance samples are collected during profiling. Disable this if you want to focus on other instruments, such as network, events or React Native profiling.</p>
+<p>The <strong>Record performance</strong> preference controls whether performance samples are collected during profiling. Disable this if you want to focus on other instruments, such as network, events or activity recording.</p>
 <h3>
 <a name="user-content-threads" class="anchor" href="#threads"><span class="octicon octicon-link"></span></a>Threads</h3>
 <p>The <strong>Record thread information</strong> preference controls whether any thread information is recorded during profiling. Recording thread information can provide additional performance metrics per thread. Normally, recording thread information is not an expensive operation and should be enabled unless absolutely not needed.</p>
@@ -68,13 +68,6 @@ ul { padding-left: 1.3em; }
 <h3>
 <a name="user-content-log" class="anchor" href="#log"><span class="octicon octicon-link"></span></a>Log</h3>
 <p>The <strong>Collect log output</strong> preference enables the recording of your app's log output. This can be very useful for cross-referencing your debug log output with profiling samples of your app. This is an inexpensive operation, but depending on the log output amount, may have a slight performance cost.</p>
-<h3>
-<a name="user-content-react-native" class="anchor" href="#react-native"><span class="octicon octicon-link"></span></a>React Native</h3>
-<p>The <strong>Profile React Native (if available)</strong> preference controls the React Native profiling systems in Detox Instruments and its Profiler framework. These systems provide information such as JavaScript thread performance, bridge calls and bridge data, which can be very helpful when debugging apps with React Native usage.</p>
-<p>The <strong>Record async storage data</strong> preference controls whether React Native async storage data is recorded in conjunction to async storage metrics. Depending on your app's activity, this can take a small-to-moderate toll on performance. If async storage data recording is not necessary, you can turn this preference off to save performance.</p>
-<p>The <strong>Record bridge data</strong> preference controls whether React Native bridge data is recorded during profiling. Depending on your app's activity, this can take a small-to-moderate toll on performance. If bridge data recording is not necessary, you can turn this preference off to save performance.</p>
-<p>The <strong>Record timers as activity</strong> preference controls whether React Native timers, created in JavaScript using <code>setTimeout()</code>, should be recorded as activity and displayed in the Activity instrument. This preference requires that the <strong><code>detox-instruments-react-native-utils</code></strong> package be installed in your React Native app. For information on installing the package, see <a href="DeveloperAPIReferenceEventsJS.html">Events API Reference for React Native / JavaScript</a>.</p>
-<p>The <strong>Record internal React Native activity</strong> preference controls whether internal React Native activity is recorded. Record this information when you want to have insight on the internal working and performance of React Native.</p>
 <h3>
 <a name="user-content-time-limit" class="anchor" href="#time-limit"><span class="octicon octicon-link"></span></a>Time Limit</h3>
 <p>The <strong>Time limit</strong> preference sets a hard time limit on recording duration. You can set the value in seconds, minutes or hours. The default is 2 minutes.</p>

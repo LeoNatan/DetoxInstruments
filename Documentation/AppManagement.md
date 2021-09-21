@@ -37,9 +37,3 @@ The **User Defaults** utility allows real time access and modification of your a
 ![Cookies](Resources/Management_Cookies.png)
 
 The **Cookies** utility allows creating and/or modifying your app's HTTP cookies on your device.
-
-### Async Storage (React Native only)
-
-![Async Storage](Resources/Management_AsyncStorage.png)
-
-The **Async Storage** utility allows real time access and modification of your app's React Native async storage store.

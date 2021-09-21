@@ -2,8 +2,8 @@
 //  DTXPlotAreaContentController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 01/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 01/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPlotAreaContentController.h"
@@ -19,11 +19,6 @@
 #import "DTXFPSPlotController.h"
 #import "DTXDiskReadWritesPlotController.h"
 #import "DTXCompactNetworkRequestsPlotController.h"
-#import "DTXRNCPUUsagePlotController.h"
-#import "DTXRNBridgeCountersPlotController.h"
-#import "DTXRNBridgeDataTransferPlotController.h"
-#import "DTXRNAsyncStoragePlotController.h"
-#import "DTXReactNativeAsyncStorageSample+UIExtensions.h"
 #import "DTXEventsPlotController.h"
 #import "DTXActivityPlotController.h"
 #import "DTXRecording+UIExtensions.h"
@@ -219,24 +214,11 @@
 		[_plotGroup addPlotController:[[DTXEventsPlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
 	}
 	
-	if(self.document.firstRecording.dtx_profilingConfiguration.recordActivity == YES || (self.document.firstRecording.hasReactNative == YES && self.document.firstRecording.dtx_profilingConfiguration.profileReactNative && self.document.firstRecording.dtx_profilingConfiguration.recordInternalReactNativeActivity == YES))
+	if(self.document.firstRecording.dtx_profilingConfiguration.recordActivity == YES)
 	{
 		[_plotGroup addPlotController:[[DTXActivityPlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
 	}
-	
-	if(self.document.firstRecording.hasReactNative && self.document.firstRecording.dtx_profilingConfiguration.profileReactNative)
-	{
-		[_plotGroup addPlotController:[[DTXRNCPUUsagePlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
-		[_plotGroup addPlotController:[[DTXRNBridgeCountersPlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
-		[_plotGroup addPlotController:[[DTXRNBridgeDataTransferPlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
 		
-//		if(self.document.documentState == DTXRecordingDocumentStateLiveRecording ||
-//		   [DTXReactNativeAsyncStorageSample hasAsyncStorageSamplesInManagedObjectContext:self.document.viewContext])
-		{
-			[_plotGroup addPlotController:[[DTXRNAsyncStoragePlotController alloc] initWithDocument:self.document isForTouchBar:NO]];
-		}
-	}
-	
 	if(_plotGroup.visiblePlotControllers.count == 0)
 	{
 		[_plotGroup resetPlotControllerVisibility];
@@ -491,7 +473,7 @@
 - (void)preparePreviewOfFileAtURL:(NSURL *)url completionHandler:(void (^)(NSError * _Nullable))handler
 {
 	NSError* error;
-	DTXRecordingDocument* document = [[DTXRecordingDocument alloc] initWithContentsOfURL:url ofType:@"com.wix.dtxinst.recording" error:&error];
+	DTXRecordingDocument* document = [[DTXRecordingDocument alloc] initWithContentsOfURL:url ofType:@"com.LeoNatan.dtxinst.recording" error:&error];
 	
 	if(document == nil)
 	{

@@ -2,8 +2,8 @@
 //  DTXRemoteProfilingClient.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 26/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 26/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteProfilingClient.h"
@@ -13,8 +13,8 @@
 #import <DTXSourceMaps/DTXSourceMaps.h>
 #import <pthread.h>
 
-#import "DTXLogging.h"
-DTX_CREATE_LOG(RemoteProfilingClient)
+#import "LNLogging.h"
+LN_CREATE_LOG(RemoteProfilingClient)
 
 #define SET_RECORDING SET_VALUE(_isRecording,YES)
 #define SET_NOT_RECORDING SET_VALUE(_isRecording,NO)
@@ -143,7 +143,7 @@ return; }\
 	if(_isLocal == NO)
 	{
 		dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qos_class_main(), 0);
-		_opportunisticQueue = dispatch_queue_create("com.wix.DTXRemoteProfilingOpportunisticSamples", dispatch_queue_attr_make_with_autorelease_frequency(qosAttribute, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM));
+		_opportunisticQueue = dispatch_queue_create("com.LeoNatan.DTXRemoteProfilingOpportunisticSamples", dispatch_queue_attr_make_with_autorelease_frequency(qosAttribute, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM));
 	}
 	
 	_threads = [NSMutableDictionary new];
@@ -246,18 +246,6 @@ return; }\
 	Class cls = NSClassFromString(entityDescription.managedObjectClassName);
 	__kindof DTXSample* sample = [[cls alloc] initWithPropertyListDictionaryRepresentation:sampleDict context:_managedObjectContext];
 	
-	if([sample isKindOfClass:[DTXReactNativePerformanceSample class]] && _delegate.sourceMapsParser)
-	{
-		DTXReactNativePerformanceSample* rnSample = (id)sample;
-		
-		if(rnSample.stackTraceIsSymbolicated == NO && NO/*_recording.dtx_profilingConfiguration.symbolicateJavaScriptStackTraces*/)
-		{
-			BOOL wasSymbolicated = NO;
-			rnSample.stackTrace = DTXRNSymbolicateJSCBacktrace(_delegate.sourceMapsParser, rnSample.stackTrace, &wasSymbolicated);
-			rnSample.stackTraceIsSymbolicated = wasSymbolicated;
-		}
-	}
-	
 	if(saveContext)
 	{
 		[self _saveContext];
@@ -269,7 +257,7 @@ return; }\
 	NSError* err;
 	if([_managedObjectContext save:&err] == NO)
 	{
-		dtx_log_error(@"Error saving context: %@", err);
+		ln_log_error(@"Error saving context: %@", err);
 	}
 	
 	if(_recording.managedObjectContext.insertedObjects > 0)
@@ -327,11 +315,6 @@ return; }\
 - (void)willDecodeStoryEvent {}
 
 - (void)didDecodeStoryEvent {}
-
-- (void)setSourceMapsData:(NSDictionary*)sourceMapsData;
-{
-	[self.delegate remoteProfilingClient:self didReceiveSourceMapsData:sourceMapsData[@"data"]];
-}
 
 - (void)addLogSample:(NSDictionary *)logSample entityDescription:(NSEntityDescription *)entityDescription
 {

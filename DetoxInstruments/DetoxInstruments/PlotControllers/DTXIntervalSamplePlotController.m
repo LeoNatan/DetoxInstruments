@@ -2,8 +2,8 @@
 //  DTXIntervalSamplePlotController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 6/20/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 6/20/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXIntervalSamplePlotController.h"
@@ -14,12 +14,12 @@
 #if ! PROFILER_PREVIEW_EXTENSION
 #import "DTXSampleContainerProxy.h"
 #endif
-#import "DTXMeasurements.h"
+#import "LNMeasurements.h"
 #import "DTXIntervalSectionSamplePlotController.h"
 #import "DTXRecording+UIExtensions.h"
 
-#import "DTXLogging.h"
-DTX_CREATE_LOG(IntervalSamplePlotController)
+#import "LNLogging.h"
+LN_CREATE_LOG(IntervalSamplePlotController)
 
 //@import os.signpost;
 

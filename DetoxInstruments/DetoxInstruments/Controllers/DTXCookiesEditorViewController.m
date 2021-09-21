@@ -2,8 +2,8 @@
 //  DTXCookiesEditorViewController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/3/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/3/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXCookiesEditorViewController.h"
@@ -41,12 +41,12 @@ static NSArray<NSString*>* __DTXCookiesBlacklistedAttributes;
 
 - (void)setCookies:(NSArray<NSDictionary<NSString *,id> *> *)cookies
 {
-	_plistEditor.propertyList = cookies;
+	_plistEditor.propertyListObject = cookies;
 }
 
 - (NSArray<NSDictionary<NSString *,id> *> *)cookies
 {
-	return (id)_plistEditor.propertyList;
+	return (id)_plistEditor.propertyListObject;
 }
 
 + (NSDictionary*)_emptyCookie

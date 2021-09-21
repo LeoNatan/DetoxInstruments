@@ -2,8 +2,8 @@
 //  DTXRemoteProfiler.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 19/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 19/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteProfiler.h"
@@ -11,12 +11,11 @@
 #import "DTXInstruments+CoreDataModel.h"
 #import "NSManagedObject+Additions.h"
 #import "DTXProfilingBasics.h"
-#import "DTXRNJSCSourceMapsSupport.h"
 #import "NSManagedObjectContext+PerformQOSBlock.h"
 #import "NSString+Hashing.h"
 #import "DTXSample+Additions.h"
 
-DTX_CREATE_LOG(RemoteProfiler);
+LN_CREATE_LOG(RemoteProfiler);
 
 @interface DTXProfiler ()
 
@@ -30,7 +29,7 @@ DTX_CREATE_LOG(RemoteProfiler);
 
 @implementation DTXRemoteProfiler
 {
-	DTXSocketConnection* _socketConnection;
+	LNSocketConnection* _socketConnection;
 	NSManagedObjectContext* _ctx;
 	
 	NSMutableDictionary<NSString*, id>* _pendingEvents;
@@ -51,7 +50,7 @@ DTX_CREATE_LOG(RemoteProfiler);
 	return self;
 }
 
-- (instancetype)initWithOpenedSocketConnection:(DTXSocketConnection*)connection remoteProfilerDelegate:(id<DTXRemoteProfilerDelegate>)remoteProfilerDelegate
+- (instancetype)initWithOpenedSocketConnection:(LNSocketConnection*)connection remoteProfilerDelegate:(id<DTXRemoteProfilerDelegate>)remoteProfilerDelegate
 {
 	self = [self init];
 	
@@ -60,15 +59,6 @@ DTX_CREATE_LOG(RemoteProfiler);
 		_remoteProfilerDelegate = remoteProfilerDelegate;
 		
 		_socketConnection = connection;
-		
-		DTXRNGetCurrentWorkingSourceMapsData(^(NSData* data) {
-			if(data == nil)
-			{
-				return;
-			}
-			
-			[self _serializeCommandWithSelector:NSSelectorFromString(@"setSourceMapsData:") entityName:@"" dict:@{@"data": data} additionalParams:nil];
-		});
 	}
 	
 	return self;
@@ -155,7 +145,7 @@ static id _NSNullCleanup(id obj)
 	[_socketConnection sendMessage:plistData completionHandler:^(NSError * _Nullable error) {
 		if(error)
 		{
-			dtx_log_error(@"Remote profiler hit error: %@", error);
+			ln_log_error(@"Remote profiler hit error: %@", error);
 		}
 	}];
 }
@@ -236,16 +226,6 @@ static id _NSNullCleanup(id obj)
 	
 	[performanceSample.managedObjectContext deleteObject:performanceSample];
 	[performanceSample.managedObjectContext save:NULL];
-}
-
-- (void)addRNPerformanceSample:(DTXReactNativePerformanceSample *)rnPerformanceSample
-{
-	//Instead of symbolicating here, send source maps data to Detox Instruments for remote symbolication.
-	
-	[self _serializeCommandWithSelector:_cmd managedObject:rnPerformanceSample additionalParams:nil];
-	
-	[rnPerformanceSample.managedObjectContext deleteObject:rnPerformanceSample];
-	[rnPerformanceSample.managedObjectContext save:NULL];
 }
 
 - (void)createRecording:(DTXRecording *)recording
@@ -401,99 +381,6 @@ static id _NSNullCleanup(id obj)
 	}];
 }
 
-- (void)_addRNDataFromFunction:(NSString*)function arguments:(NSArray<NSString*>*)arguments returnValue:(NSString*)rv exception:(NSString*)exception isFromNative:(BOOL)isFromNative timestamp:(NSDate*)timestamp;
-{
-	if(self.profilingConfiguration.profileReactNative == NO)
-	{
-		return;
-	}
-	
-	[_ctx performBlock:^{
-		NSMutableDictionary* preserializedData = @{
-			@"__dtx_className": @"DTXReactNativeBridgeData",
-			@"__dtx_entityName": @"ReactNativeBridgeData",
-			@"returnValue": rv ?: @"null"
-		}.mutableCopy;
-		
-		if(exception.length > 0)
-		{
-			preserializedData[@"exception"] = exception;
-		}
-		
-		if(arguments.count > 0)
-		{
-			preserializedData[@"arguments"] = arguments;
-		}
-		
-		NSMutableDictionary* preserialized = @{
-			@"__dtx_className": @"DTXReactNativeDataSample",
-			@"__dtx_entityName": @"ReactNativeDataSample",
-			@"sampleIdentifier": NSUUID.UUID.UUIDString,
-			@"sampleType": @10001,
-			@"timestamp": timestamp,
-			@"isFromNative": @(isFromNative),
-			@"data": preserializedData
-		}.mutableCopy;
-		
-		if(function.length > 0)
-		{
-			preserialized[@"function"] = function;
-		}
-		
-		[self _serializeCommandWithSelector:NSSelectorFromString(@"addRNBridgeDataSample:") entityName:@"ReactNativeDataSample" dict:preserialized additionalParams:nil];
-	}];
-}
-
-- (void)_addRNAsyncStorageOperation:(NSString*)operation fetchCount:(int64_t)fetchCount fetchDuration:(double)fetchDuration saveCount:(int64_t)saveCount saveDuration:(double)saveDuration isDataKeysOnly:(BOOL)isDataKeysOnly data:(NSArray*)_data error:(NSDictionary*)error timestamp:(NSDate*)timestamp
-{
-	if(self.profilingConfiguration.profileReactNative == NO)
-	{
-		return;
-	}
-	
-	[_ctx performBlock:^{
-		NSMutableDictionary* data = nil;
-		if(self.profilingConfiguration.recordReactNativeAsyncStorageData)
-		{
-			data = @{
-				@"__dtx_className": @"DTXReactNativeAsyncStorageData",
-				@"__dtx_entityName": @"ReactNativeAsyncStorageData",
-				@"isKeysOnly": @(isDataKeysOnly)
-			}.mutableCopy;
-			
-			if(_data != nil)
-			{
-				data[@"data"] = _data;
-			}
-			
-			if(error != nil)
-			{
-				data[@"error"] = error;
-			}
-		}
-		
-		NSMutableDictionary* sample = @{
-			@"__dtx_className": @"DTXReactNativeAsyncStorageSample",
-			@"__dtx_entityName": @"ReactNativeAsyncStorageSample",
-			@"sampleIdentifier": NSUUID.UUID.UUIDString,
-			@"sampleType": @(DTXSampleTypeReactNativeAsyncStorageType),
-			@"timestamp": timestamp,
-			@"operation": operation,
-			@"fetchCount": @(fetchCount),
-			@"fetchDuration": @(fetchDuration),
-			@"saveCount": @(saveCount),
-			@"saveDuration": @(saveDuration),
-		}.mutableCopy;
-		
-		if(data != nil)
-		{
-			sample[@"data"] = data;
-		}
-		
-		[self _serializeCommandWithSelector:NSSelectorFromString(@"addRNAsyncStorageSample:") entityName:@"ReactNativeAsyncStorageSample" dict:sample additionalParams:nil];
-	}];
-}
-
 - (void)updateRecording:(DTXRecording *)recording stopRecording:(BOOL)stopRecording
 {
 	[self _serializeCommandWithSelector:_cmd entityName:recording.entity.name dict:recording.dictionaryRepresentationOfChangedValuesForPropertyList additionalParams:@[@(stopRecording)]];
@@ -626,8 +513,6 @@ static id _NSNullCleanup(id obj)
 - (void)markEventIntervalEnd:(DTXSignpostSample *)signpostSample {}
 - (void)startRequestWithNetworkSample:(DTXNetworkSample *)networkSample {}
 - (void)finishWithResponseForNetworkSample:(DTXNetworkSample *)networkSample {}
-- (void)addRNBridgeDataSample:(DTXReactNativeDataSample*)rbBridgeDataSample {}
-- (void)addRNAsyncStorageSample:(DTXReactNativeAsyncStorageSample *)rnAsyncStorageSample {}
 
 @end
 

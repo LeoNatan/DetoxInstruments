@@ -2,8 +2,8 @@
 //  DTXRangePlotView.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 12/24/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 12/24/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPlotView-Private.h"
@@ -243,7 +243,7 @@ const CGFloat DTXRangePlotViewDefaultLineSpacing = 4.0;
 }
 
 static
-DTX_ALWAYS_INLINE
+LN_ALWAYS_INLINE
 void __DTXDrawLinesFastPath(DTXRangePlotView* self, CGContextRef ctx, NSRect dirtyRect)
 {
 	DTXPlotRange* globalRange = self.globalPlotRange;
@@ -317,7 +317,7 @@ void __DTXDrawLinesFastPath(DTXRangePlotView* self, CGContextRef ctx, NSRect dir
 	}
 }
 
-static DTX_ALWAYS_INLINE void __DTXDrawLinesSlowPath(DTXRangePlotView* self, CGContextRef ctx, NSRect dirtyRect, NSMutableArray<_DTXDrawingZone*>* zones)
+static LN_ALWAYS_INLINE void __DTXDrawLinesSlowPath(DTXRangePlotView* self, CGContextRef ctx, NSRect dirtyRect, NSMutableArray<_DTXDrawingZone*>* zones)
 {
 	DTXPlotRange* globalRange = self.globalPlotRange;
 	DTXPlotRange* range = self.plotRange;

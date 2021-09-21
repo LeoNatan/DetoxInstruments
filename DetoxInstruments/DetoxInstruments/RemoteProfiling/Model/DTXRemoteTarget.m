@@ -2,8 +2,8 @@
 //  DTXRemoteTarget.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 23/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 23/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteTarget-Private.h"
@@ -14,7 +14,7 @@
 
 @import AppKit;
 
-@interface DTXRemoteTarget () <DTXSocketConnectionDelegate>
+@interface DTXRemoteTarget () <LNSocketConnectionDelegate>
 {
 	dispatch_source_t _pingTimer;
 	NSDate* _lastPingDate;
@@ -24,7 +24,7 @@
 	void(^_logHandler)(BOOL isFromAppProcess, NSString* processName, BOOL isFromApple, NSDate* timestamp, DTXProfilerLogLevel level, NSString* subsystem, NSString* category, NSString* message);
 }
 
-@property (nonatomic, strong, readwrite) DTXSocketConnection* connection;
+@property (nonatomic, strong, readwrite) LNSocketConnection* connection;
 
 @end
 
@@ -94,7 +94,7 @@
 	
 	_state = DTXRemoteTargetStateResolved;
 	
-	self.connection = [[DTXSocketConnection alloc] initWithHostName:hostName port:port delegateQueue:_workQueue];
+	self.connection = [[LNSocketConnection alloc] initWithHostName:hostName port:port delegateQueue:_workQueue];
 	self.connection.delegate = self;
 	
 	[self.connection open];
@@ -197,9 +197,6 @@
 			case DTXRemoteProfilingCommandTypeCaptureViewHierarchy:
 				[weakSelf _handleViewHierarchy:cmd];
 				break;
-			case DTXRemoteProfilingCommandTypeGetAsyncStorage:
-				[weakSelf _handleAsyncStorage:cmd];
-				break;
 			case DTXRemoteProfilingCommandTypeStartLaunchProfilingWithConfiguration:
 				[weakSelf _handleRemoteLaunchProfilingDidFinish:cmd];
 				break;
@@ -222,7 +219,6 @@
 			case DTXRemoteProfilingCommandTypeChangeUserDefaultsItem:
 			case DTXRemoteProfilingCommandTypeSetCookies:
 			case DTXRemoteProfilingCommandTypeSetPasteboard:
-			case DTXRemoteProfilingCommandTypeChangeAsyncStorageItem:
 			case DTXRemoteProfilingCommandTypeStartLogging:
 			case DTXRemoteProfilingCommandTypeStopLogging:
 				break;
@@ -259,7 +255,6 @@
 {
 	self.deviceName = deviceInfo[@"deviceName"];
 	self.appName = deviceInfo[@"appName"];
-	self.hasReactNative = [deviceInfo[@"hasReactNative"] boolValue];
 	NSString* marketingName = deviceInfo[@"deviceMarketingName"];
 	if(marketingName)
 	{
@@ -463,50 +458,6 @@
 	[self _writeCommand:@{@"cmdType": @(DTXRemoteProfilingCommandTypeSetPasteboard), @"pasteboardContents": [NSKeyedArchiver archivedDataWithRootObject:pasteboardContents requiringSecureCoding:YES error:NULL]} completionHandler:nil];
 }
 
-#pragma mark Async Storage
-
-- (void)loadAsyncStorage
-{
-	[self _writeCommand:@{@"cmdType": @(DTXRemoteProfilingCommandTypeGetAsyncStorage)} completionHandler:nil];
-}
-
-- (void)changeAsyncStorageItemWithKey:(NSString*)key changeType:(DTXRemoteProfilingChangeType)changeType value:(id)value previousKey:(NSString*)previousKey
-{
-	NSMutableDictionary* cmd = @{@"cmdType": @(DTXRemoteProfilingCommandTypeChangeAsyncStorageItem)}.mutableCopy;
-	cmd[@"type"] = @(changeType);
-	if(key)
-	{
-		cmd[@"key"] = key;
-	}
-	if(value)
-	{
-		cmd[@"value"] = value;
-	}
-	if(previousKey)
-	{
-		cmd[@"previousKey"] = previousKey;
-	}
-	
-	[self _writeCommand:cmd completionHandler:nil];
-}
-
-- (void)clearAsyncStorage
-{
-	[self changeAsyncStorageItemWithKey:nil changeType:DTXRemoteProfilingChangeTypeClear value:nil previousKey:nil];
-}
-
-- (void)_handleAsyncStorage:(NSDictionary*)userDefaults
-{
-	_asyncStorage = userDefaults[@"asyncStorage"];
-	
-//	[[NSKeyedArchiver archivedDataWithRootObject:_asyncStorage requiringSecureCoding:NO error:NULL] writeToFile:[[NSBundle.mainBundle objectForInfoDictionaryKey:@"DTXSourceRoot"] stringByAppendingPathComponent:@"../Documentation/Example Recording/Example Management Data/AsyncStorage.dat"] atomically:YES];
-	
-	if([self.delegate respondsToSelector:@selector(profilingTarget:didLoadAsyncStorage:)])
-	{
-		[self.delegate profilingTarget:self didLoadAsyncStorage:self.asyncStorage];
-	}
-}
-
 #pragma mark Logging
 
 - (void)startStreamingLogsWithHandler:(void(^)(BOOL isFromAppProcess, NSString* processName, BOOL isFromApple, NSDate* timestamp, DTXProfilerLogLevel level, NSString* __nullable subsystem, NSString* __nullable category, NSString* message))handler
@@ -640,14 +591,14 @@
 	[self.delegate profilingTarget:self didFinishLaunchProfilingWithZippedData:remoteLaunchProfilingDidFinish[@"recordingZipData"]];
 }
 
-#pragma mark DTXSocketConnectionDelegate
+#pragma mark LNSocketConnectionDelegate
 
-- (void)readClosedForSocketConnection:(DTXSocketConnection*)socketConnection;
+- (void)readClosedForSocketConnection:(LNSocketConnection*)socketConnection;
 {
 	[self _errorOutWithError:nil];
 }
 
-- (void)writeClosedForSocketConnection:(DTXSocketConnection*)socketConnection
+- (void)writeClosedForSocketConnection:(LNSocketConnection*)socketConnection
 {
 	[self _errorOutWithError:nil];
 }

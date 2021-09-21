@@ -2,8 +2,8 @@
 //  DTXPasteForwardingFieldEditorTextFieldCell.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 5/13/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 5/13/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPasteForwardingFieldEditorTextFieldCell.h"

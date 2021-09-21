@@ -2,8 +2,8 @@
 //  DTXPlotHostingTableCellView.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 01/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 01/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPlotHostingTableCellView.h"

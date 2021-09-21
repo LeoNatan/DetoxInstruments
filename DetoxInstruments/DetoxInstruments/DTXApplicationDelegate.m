@@ -2,21 +2,21 @@
 //  AppDelegate.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 22/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 22/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXApplicationDelegate.h"
 #import "DTXRecordingDocument.h"
 #import "DTXAboutWindowController.h"
 #import "DTXColorTryoutsWindow.h"
-#import "DTXMeasurements.h"
+#import "LNMeasurements.h"
 #import "DTXWindowController.h"
 #import "DTXRequestDocument.h"
 #import "DTXInstrumentsPreferencesWindowController.h"
 
-#import "DTXLogging.h"
-DTX_CREATE_LOG(ApplicationDelegate)
+#import "LNLogging.h"
+LN_CREATE_LOG(ApplicationDelegate)
 
 @import Carbon;
 @import Sparkle;
@@ -113,7 +113,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 	[NSTask launchedTaskWithExecutableURL:[NSURL fileURLWithPath:@"/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"] arguments:@[@"-f", NSBundle.mainBundle.bundlePath, @"-R", @"-lint"] error:NULL terminationHandler:^(NSTask * _Nonnull task) {
 		if(task.terminationStatus != 0)
 		{
-			dtx_log_error(@"lsregister opration failed");
+			ln_log_error(@"lsregister opration failed");
 		}
 	}];
 }
@@ -160,12 +160,12 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 		_hasRecordingDocumentWindowOpen = doc.documentState == DTXRecordingDocumentStateLiveRecording;
 		_hasSavedDocumentWindowOpen = doc.documentState >= DTXRecordingDocumentStateLiveRecordingFinished;
 		
-//		dtx_log_debug(@"hasNoDocumentWindowOpen: %@", @(_hasNoDocumentWindowOpen));
-//		dtx_log_debug(@"hasAnyDocumentWindowOpen: %@", @(_hasAnyDocumentWindowOpen));
-//		dtx_log_debug(@"hasNewRecordingDocumentWindowOpen: %@", @(_hasNewRecordingDocumentWindowOpen));
-//		dtx_log_debug(@"hasAtLeastRecordingDocumentWindowOpen: %@", @(_hasAtLeastRecordingDocumentWindowOpen));
-//		dtx_log_debug(@"hasRecordingDocumentWindowOpen: %@", @(_hasRecordingDocumentWindowOpen));
-//		dtx_log_debug(@"hasSavedDocumentWindowOpen: %@", @(_hasSavedDocumentWindowOpen));
+//		ln_log_debug(@"hasNoDocumentWindowOpen: %@", @(_hasNoDocumentWindowOpen));
+//		ln_log_debug(@"hasAnyDocumentWindowOpen: %@", @(_hasAnyDocumentWindowOpen));
+//		ln_log_debug(@"hasNewRecordingDocumentWindowOpen: %@", @(_hasNewRecordingDocumentWindowOpen));
+//		ln_log_debug(@"hasAtLeastRecordingDocumentWindowOpen: %@", @(_hasAtLeastRecordingDocumentWindowOpen));
+//		ln_log_debug(@"hasRecordingDocumentWindowOpen: %@", @(_hasRecordingDocumentWindowOpen));
+//		ln_log_debug(@"hasSavedDocumentWindowOpen: %@", @(_hasSavedDocumentWindowOpen));
 		
 		[self didChangeValueForKey:@"hasNoDocumentWindowOpen"];
 		[self didChangeValueForKey:@"hasAnyDocumentWindowOpen"];
@@ -230,7 +230,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 
 - (IBAction)openGitHubPage:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/wix/DetoxInstruments"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/LeoNatan/DetoxInstruments"]];
 }
 
 - (IBAction)helpIntegrationGuidePage:(id)sender
@@ -315,7 +315,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 
 - (IBAction)openIssuesPage:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/wix/DetoxInstruments/issues/new/choose"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/LeoNatan/DetoxInstruments/issues/new/choose"]];
 }
 
 - (IBAction)showColorPlayground:(id)sender
@@ -375,7 +375,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	dtx_log_info(@"Validating menu item: %@ (action: %@)", menuItem, NSStringFromSelector(menuItem.action));
+	ln_log_info(@"Validating menu item: %@ (action: %@)", menuItem, NSStringFromSelector(menuItem.action));
 	
 	if(menuItem.action == @selector(checkForUpdates:))
 	{
@@ -399,7 +399,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 		menuItem.hidden = _hasAtLeastRecordingDocumentWindowOpen == NO;
 		if(menuItem.hidden)
 		{
-			dtx_log_info(@"Hiding “Interval Labels” menu item");
+			ln_log_info(@"Hiding “Interval Labels” menu item");
 			
 			return NO;
 		}
@@ -416,7 +416,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 		menuItem.hidden = _hasAtLeastRecordingDocumentWindowOpen == NO;
 		if(menuItem.hidden == YES)
 		{
-			dtx_log_info(@"Hiding “%@” menu item", menuItem.title);
+			ln_log_info(@"Hiding “%@” menu item", menuItem.title);
 			
 			return NO;
 		}
@@ -426,86 +426,10 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 		menuItem.submenu = windowController.currentPlotController.quickSettingsMenu;
 		if(menuItem.submenu == nil)
 		{
-			dtx_log_info(@"Hiding “%@” menu item", menuItem.title);
+			ln_log_info(@"Hiding “%@” menu item", menuItem.title);
 			menuItem.hidden = YES;
 			
 			return NO;
-		}
-		
-		return YES;
-	}
-	
-	if(menuItem.action == @selector(_CLIIntegrationAction:) && menuItem.alternate == NO)
-	{
-		if(DTXInstrumentsUtils.isUnsupportedVersion)
-		{
-			menuItem.alternate = NO;
-			menuItem.hidden = YES;
-			return NO;
-		}
-		
-		NSUInteger integrationState = self._CLIInstallationStatus;
-		
-		BOOL isPath = [menuItem.identifier isEqualToString:@"DTXCLIMoreInfoPath"];
-		if(isPath || [menuItem.identifier isEqualToString:@"DTXCLIMoreInfoLabel"])
-		{
-			menuItem.hidden = integrationState == 0;
-			
-			if(isPath)
-			{
-				menuItem.image = integrationState == 2 ? [NSImage imageNamed:@"warning-menu"] : nil;
-				menuItem.image.size = NSMakeSize(16, 16);
-				menuItem.title = self._CLIInstallURL.path;
-			}
-			
-			return NO;
-		}
-		
-		switch (integrationState) {
-			case 0:
-				menuItem.title = NSLocalizedString(@"Install Command Line Utility", @"");
-				menuItem.identifier = @"_installCLIIntegration";
-				break;
-			case 1:
-				menuItem.title = NSLocalizedString(@"Uninstall Command Line Utility", @"");
-				menuItem.identifier = @"_uninstallCLIIntegration";
-				break;
-			case 2:
-				menuItem.title = NSLocalizedString(@"Repair Command Line Utility", @"");
-				menuItem.identifier = @"_installCLIIntegration";
-				break;
-		}
-		
-		return YES;
-	}
-	
-	if(menuItem.action == @selector(_CLIIntegrationAction:) && menuItem.alternate == YES)
-	{
-		if(DTXInstrumentsUtils.isUnsupportedVersion)
-		{
-			menuItem.alternate = NO;
-			menuItem.hidden = YES;
-			return NO;
-		}
-		
-		NSUInteger integrationState = self._CLIInstallationStatus;
-		
-		menuItem.keyEquivalentModifierMask = integrationState == 0 ? 0 : NSEventModifierFlagOption;
-		
-		switch (integrationState) {
-			case 0:
-				menuItem.title = NSLocalizedString(@"Uninstall Command Line Utility", @"");
-				menuItem.identifier = @"";
-				return NO;
-				break;
-			case 1:
-				menuItem.title = NSLocalizedString(@"Reinstall Command Line Utility", @"");
-				menuItem.identifier = @"_installCLIIntegration";
-				break;
-			case 2:
-				menuItem.title = NSLocalizedString(@"Uninstall Command Line Utility", @"");
-				menuItem.identifier = @"_uninstallCLIIntegration";
-				break;
 		}
 		
 		return YES;
@@ -563,7 +487,7 @@ OSStatus DTXGoToHelpPage(NSString* pagePath)
 - (NSUInteger)_CLIInstallationStatus
 {
 //	DTXStartTimeMeasurment();
-//	dtx_defer {
+//	ln_defer {
 //		DTXEndTimeMeasurment("determine installation status");
 //	};
 	

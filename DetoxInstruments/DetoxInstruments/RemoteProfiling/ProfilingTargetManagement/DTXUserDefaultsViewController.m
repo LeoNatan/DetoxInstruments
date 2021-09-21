@@ -2,8 +2,8 @@
 //  DTXUserDefaultsViewController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 4/18/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 4/18/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXUserDefaultsViewController.h"
@@ -64,7 +64,7 @@
 
 - (void)noteProfilingTargetDidLoadServiceData
 {
-	_plistEditor.propertyList = self.profilingTarget.userDefaults;
+	_plistEditor.propertyListObject = self.profilingTarget.userDefaults;
 }
 
 #pragma mark CCNPreferencesWindowControllerProtocol
@@ -100,7 +100,7 @@
 {
 	LNPropertyListNode* childOfParent = [editor.rootPropertyListNode childNodeContainingDescendantNode:node];
 	
-	[self.profilingTarget changeUserDefaultsItemWithKey:childOfParent.key changeType:childOfParent == node ? (DTXRemoteProfilingChangeType)changeType : DTXRemoteProfilingChangeTypeUpdate value:childOfParent.propertyList previousKey:childOfParent == node ? previousKey : nil];
+	[self.profilingTarget changeUserDefaultsItemWithKey:childOfParent.key changeType:childOfParent == node ? (DTXRemoteProfilingChangeType)changeType : DTXRemoteProfilingChangeTypeUpdate value:childOfParent.propertyListObject previousKey:childOfParent == node ? previousKey : nil];
 }
 
 @end

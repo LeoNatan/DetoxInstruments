@@ -2,8 +2,8 @@
 //  DTXRecordingTargetPickerViewController+DocumentationGeneration.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 5/9/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 5/9/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #if DEBUG
@@ -22,7 +22,6 @@
 @property (nonatomic, copy) NSString* devicePresentable;
 @property (nonatomic, copy) NSImage* screenSnapshot;
 @property (nonatomic, copy) NSDictionary* deviceInfo;
-@property (nonatomic) BOOL hasReactNative;
 
 @property (nonatomic, strong) DTXFileSystemItem* containerContents;
 @property (nonatomic, strong) id userDefaults;
@@ -67,14 +66,6 @@
 	self.userDefaults = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle.mainBundle objectForInfoDictionaryKey:@"DTXSourceRoot"] stringByAppendingPathComponent:@"../Documentation/Example Recording/Example Management Data/UserDefaults.dat"]];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self.delegate profilingTarget:(id)self didLoadUserDefaults:self.userDefaults];
-	});
-}
-
-- (void)loadAsyncStorage;
-{
-	self.asyncStorage = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle.mainBundle objectForInfoDictionaryKey:@"DTXSourceRoot"] stringByAppendingPathComponent:@"../Documentation/Example Recording/Example Management Data/AsyncStorage.dat"]];
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self.delegate profilingTarget:(id)self didLoadAsyncStorage:self.asyncStorage];
 	});
 }
 
@@ -170,7 +161,6 @@ static __FAKE_DTXRemoteTarget* fakeTarget;
 	fakeTarget.deviceName = @"Leo Natan's iPhone";
 	fakeTarget.devicePresentable = @"iPhone 12 Pro Max, iOS 14.2 (Build 18B5072e)";
 	fakeTarget.deviceInfo = @{@"profilerVersion": @"1.14", @"machineName": @"iPhone13,4"};
-	fakeTarget.hasReactNative = YES;
 	fakeTarget.screenSnapshot = __DTXiPhoneXSMaxScreenshot();
 	fakeTarget.state = DTXRemoteTargetStateDeviceInfoLoaded;
 	

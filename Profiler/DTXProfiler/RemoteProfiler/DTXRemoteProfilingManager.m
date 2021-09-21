@@ -2,8 +2,8 @@
 //  DTXRemoteProfilingManager.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 19/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 19/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,7 +15,7 @@
 #import "DTXProfiler-Private.h"
 #import "DTXProfilingConfiguration-Private.h"
 
-DTX_CREATE_LOG(RemoteProfilingManager);
+LN_CREATE_LOG(RemoteProfilingManager);
 
 static DTXRemoteProfilingManager* __sharedManager;
 static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
@@ -64,7 +64,7 @@ static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
 			
 			DTXProfiler* launchProfiler = [DTXProfiler new];
 			[launchProfiler startProfilingWithConfiguration:config duration:duration completionHandler:^(NSError * _Nullable error) {
-				dtx_defer {
+				ln_defer {
 					[__privateLaunchProfilingManager _stopPublishing];
 					__privateLaunchProfilingManager = nil;
 				};
@@ -145,7 +145,7 @@ static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
 		}
 		
 		self->_currentlyPublished = YES;
-		dtx_log_info(@"Attempting to publish service of type “%@”", self->_publishingService.type);
+		ln_log_info(@"Attempting to publish service of type “%@”", self->_publishingService.type);
 		[self->_publishingService publishWithOptions:NSNetServiceListenForConnections];
 		
 //		[self->_advertiser startAdvertisingPeer];
@@ -186,7 +186,7 @@ static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
 
 - (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary<NSString *, NSNumber *> *)errorDict
 {
-	dtx_log_error(@"Error publishing service of type “%@”: %@", _publishingService.type, errorDict);
+	ln_log_error(@"Error publishing service of type “%@”: %@", _publishingService.type, errorDict);
 	[self _stopPublishing];
 	
 	//Retry in 2 seconds.
@@ -197,7 +197,7 @@ static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream
 {
-	dtx_log_info(@"Accepted connection for service of type “%@”", sender.type);
+	ln_log_info(@"Accepted connection for service of type “%@”", sender.type);
 	auto connectionManager = [[DTXRemoteProfilingConnectionManager alloc] initWithInputStream:inputStream outputStream:outputStream];
 	connectionManager.delegate = self;
 	
@@ -215,12 +215,12 @@ static DTXRemoteProfilingManager* __privateLaunchProfilingManager;
 
 - (void)netServiceDidPublish:(NSNetService *)sender
 {
-	dtx_log_info(@"Net service of type “%@” published", sender.type);
+	ln_log_info(@"Net service of type “%@” published", sender.type);
 }
 
 - (void)netServiceDidStop:(NSNetService *)sender
 {
-	dtx_log_info(@"Net service of type “%@” stopped", sender.type);
+	ln_log_info(@"Net service of type “%@” stopped", sender.type);
 }
 
 #pragma DTXRemoteProfilingConnectionManagerDelegate

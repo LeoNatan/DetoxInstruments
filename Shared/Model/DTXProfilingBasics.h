@@ -2,8 +2,8 @@
 //  DTXRemoteProfilingBasics.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 23/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 23/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 @class NSEntityDescription;
@@ -38,9 +38,6 @@ typedef NS_ENUM(NSUInteger, DTXRemoteProfilingCommandType) {
 	DTXRemoteProfilingCommandTypeGetPasteboard = 16,
 	DTXRemoteProfilingCommandTypeSetPasteboard = 17,
 	
-	DTXRemoteProfilingCommandTypeGetAsyncStorage = 22,
-	DTXRemoteProfilingCommandTypeChangeAsyncStorageItem = 23,
-	
 	DTXRemoteProfilingCommandTypeStartLogging = 24,
 	DTXRemoteProfilingCommandTypeLogEntry = 25,
 	DTXRemoteProfilingCommandTypeStopLogging = 26,
@@ -60,8 +57,8 @@ typedef NS_ENUM(NSUInteger, DTXRemoteProfilingChangeType) {
 };
 
 @class DTXRecording, DTXPerformanceSample;
-@class DTXThreadInfo, DTXReactNativePerformanceSample, DTXNetworkSample, DTXLogSample, DTXTag;
-@class DTXSignpostSample, DTXReactNativeDataSample, DTXReactNativeAsyncStorageSample;
+@class DTXThreadInfo, DTXNetworkSample, DTXLogSample, DTXTag;
+@class DTXSignpostSample;
 
 @protocol DTXProfilerStoryListener <NSObject>
 
@@ -69,11 +66,8 @@ typedef NS_ENUM(NSUInteger, DTXRemoteProfilingChangeType) {
 - (void)updateRecording:(DTXRecording*)recording stopRecording:(BOOL)stopRecording;
 - (void)createdOrUpdatedThreadInfo:(DTXThreadInfo*)threadInfo;
 - (void)addPerformanceSample:(__kindof DTXPerformanceSample*)perfrmanceSample;
-- (void)addRNPerformanceSample:(DTXReactNativePerformanceSample *)rnPerfrmanceSample;
 - (void)startRequestWithNetworkSample:(DTXNetworkSample*)networkSample;
 - (void)finishWithResponseForNetworkSample:(DTXNetworkSample*)networkSample;
-- (void)addRNBridgeDataSample:(DTXReactNativeDataSample*)rnBridgeDataSample;
-- (void)addRNAsyncStorageSample:(DTXReactNativeAsyncStorageSample*)rnAsyncStorageSample;
 - (void)addLogSample:(DTXLogSample*)logSample;
 - (void)addTagSample:(DTXTag*)tag;
 - (void)markEventIntervalBegin:(DTXSignpostSample*)signpostSample;
@@ -89,8 +83,6 @@ typedef NS_ENUM(NSUInteger, DTXRemoteProfilingChangeType) {
 
 - (void)willDecodeStoryEvent;
 - (void)didDecodeStoryEvent;
-
-- (void)setSourceMapsData:(NSDictionary*)sourceMapsData;
 
 - (void)createRecording:(NSDictionary*)recording entityDescription:(NSEntityDescription*)entityDescription;
 - (void)updateRecording:(NSDictionary*)recording stopRecording:(NSNumber*)stopRecording entityDescription:(NSEntityDescription*)entityDescription;

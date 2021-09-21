@@ -14,7 +14,7 @@ It is recommended to start with the default value and only increase sampling fre
 
 ### Performance
 
-The **Record performance** preference controls whether performance samples are collected during profiling. Disable this if you want to focus on other instruments, such as network, events or React Native profiling.
+The **Record performance** preference controls whether performance samples are collected during profiling. Disable this if you want to focus on other instruments, such as network, events or activity recording.
 
 ### Threads
 
@@ -55,18 +55,6 @@ For an in-depth look at the Events instrument, see [Activity Instrument](Instrum
 ### Log
 
 The **Collect log output** preference enables the recording of your app's log output. This can be very useful for cross-referencing your debug log output with profiling samples of your app. This is an inexpensive operation, but depending on the log output amount, may have a slight performance cost.
-
-### React Native
-
-The **Profile React Native (if available)** preference controls the React Native profiling systems in Detox Instruments and its Profiler framework. These systems provide information such as JavaScript thread performance, bridge calls and bridge data, which can be very helpful when debugging apps with React Native usage.
-
-The **Record async storage data** preference controls whether React Native async storage data is recorded in conjunction to async storage metrics. Depending on your app's activity, this can take a small-to-moderate toll on performance. If async storage data recording is not necessary, you can turn this preference off to save performance.
-
-The **Record bridge data** preference controls whether React Native bridge data is recorded during profiling. Depending on your app's activity, this can take a small-to-moderate toll on performance. If bridge data recording is not necessary, you can turn this preference off to save performance.
-
-The **Record timers as activity** preference controls whether React Native timers, created in JavaScript using `setTimeout()`, should be recorded as activity and displayed in the Activity instrument. This preference requires that the **`detox-instruments-react-native-utils`** package be installed in your React Native app. For information on installing the package, see [Events API Reference for React Native / JavaScript](DeveloperAPIReferenceEventsJS.md).
-
-The **Record internal React Native activity** preference controls whether internal React Native activity is recorded. Record this information when you want to have insight on the internal working and performance of React Native.
 
 ### Time Limit
 

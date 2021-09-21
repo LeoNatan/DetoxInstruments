@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.15</string>
+	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>13062</string>
+	<string>13145</string>
 	<key>DTXBuildDate</key>
-	<date>2021-02-08T20:38:48Z</date>
+	<date>2021-09-21T14:57:06Z</date>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

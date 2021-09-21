@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  StressTestApp
 //
-//  Created by Leo Natan (Wix) on 22/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 22/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -38,7 +38,7 @@
 											   @"Got kIOMessageSystemWillSleep", ];
 	
 	dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qos_class_main(), 0);
-	_consoleLogDemoTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_queue_create("com.wix.ConsoleOutputDemo", qosAttribute));
+	_consoleLogDemoTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_queue_create("com.LeoNatan.ConsoleOutputDemo", qosAttribute));
 	uint64_t interval = 0.5 * NSEC_PER_SEC;
 	dispatch_source_set_timer(_consoleLogDemoTimerSource, dispatch_walltime(NULL, 0), interval, interval / 10);
 	

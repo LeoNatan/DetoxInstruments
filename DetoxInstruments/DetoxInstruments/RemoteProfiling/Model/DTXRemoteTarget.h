@@ -2,8 +2,8 @@
 //  DTXRemoteTarget.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 23/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 23/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -44,8 +44,6 @@ typedef NS_ENUM(NSUInteger, DTXRemoteTargetState) {
 
 - (void)profilingTarget:(DTXRemoteTarget*)target didFinishLaunchProfilingWithZippedData:(NSData*)zippedData;
 
-- (void)profilingTarget:(DTXRemoteTarget*)target didLoadAsyncStorage:(NSDictionary*)asyncStorage;
-
 @end
 
 @interface DTXRemoteTarget : NSObject
@@ -57,7 +55,6 @@ typedef NS_ENUM(NSUInteger, DTXRemoteTargetState) {
 @property (nonatomic, copy, readonly) NSImage* deviceSnapshot;
 @property (nonatomic, copy, readonly) NSDictionary* deviceInfo;
 @property (nonatomic, strong, readonly) NSImage* screenSnapshot;
-@property (nonatomic, readonly) BOOL hasReactNative;
 
 @property (nonatomic, readonly, getter=isCompatibleWithInstruments) BOOL compatibleWithInstruments;
 
@@ -83,11 +80,6 @@ typedef NS_ENUM(NSUInteger, DTXRemoteTargetState) {
 @property (nonatomic, copy, readonly) NSDictionary<NSString*, id>* userDefaults;
 - (void)loadUserDefaults;
 - (void)changeUserDefaultsItemWithKey:(NSString*)key changeType:(DTXRemoteProfilingChangeType)changeType value:(id)value previousKey:(NSString*)previousKey;
-
-@property (nonatomic, copy, readonly) NSDictionary<NSString*, id>* asyncStorage;
-- (void)loadAsyncStorage;
-- (void)changeAsyncStorageItemWithKey:(NSString*)key changeType:(DTXRemoteProfilingChangeType)changeType value:(id)value previousKey:(NSString*)previousKey;
-- (void)clearAsyncStorage;
 
 @property (nonatomic, copy) NSArray<NSDictionary<NSString*, id>*>* cookies;
 - (void)loadCookies;

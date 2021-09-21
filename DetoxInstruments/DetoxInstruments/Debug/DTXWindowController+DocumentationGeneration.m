@@ -2,8 +2,8 @@
 //  DTXWindowController+DocumentationGeneration.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 5/9/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 5/9/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #ifdef DEBUG
@@ -74,7 +74,7 @@
 	id plotController = [self _plotControllerForClass:cls];
 	NSOutlineView* hostingOutline = [self valueForKeyPath:@"plotContentController.tableView"];
 	
-	return [[hostingOutline rowViewAtRow:[hostingOutline rowForItem:plotController] makeIfNecessary:NO] snapshotForCachingDisplay];
+	return [[hostingOutline rowViewAtRow:[hostingOutline rowForItem:plotController] makeIfNecessary:YES] snapshotForCachingDisplay];
 }
 
 - (NSImage*)_snapshotForOnlyPlotOfPlotControllerOfClass:(Class)cls
@@ -83,7 +83,7 @@
 	id plotController = [self _plotControllerForClass:cls];
 	NSOutlineView* hostingOutline = [self valueForKeyPath:@"plotContentController.tableView"];
 	
-	NSView* cell = [hostingOutline rowViewAtRow:[hostingOutline rowForItem:plotController] makeIfNecessary:NO].subviews.lastObject;
+	NSView* cell = [hostingOutline rowViewAtRow:[hostingOutline rowForItem:plotController] makeIfNecessary:YES].subviews.lastObject;
 	
 	return [cell snapshotForCachingDisplay];
 }

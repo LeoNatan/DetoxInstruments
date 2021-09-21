@@ -2,8 +2,8 @@
 //  DTXRecordingDocumentController.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 20/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 20/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRecordingDocumentController.h"
@@ -31,12 +31,14 @@
 
 - (nullable Class)documentClassForType:(NSString *)typeName
 {
-	if([typeName isEqualToString:@"com.wix.dtxinst.recording"] || [typeName isEqualToString:@"com.wix.dtxinst.recording.legacy"])
+	
+	
+	if([typeName compare:@"com.LeoNatan.dtxinst.recording" options:NSCaseInsensitiveSearch] == NSOrderedSame || [typeName compare:@"com.LeoNatan.dtxinst.recording.legacy" options:NSCaseInsensitiveSearch] == NSOrderedSame)
 	{
 		return DTXRecordingDocument.class;
 	}
 #if ! CLI
-	else if([typeName isEqualToString:@"com.wix.dtxinst.request"])
+	else if([typeName compare:@"com.LeoNatan.dtxinst.request" options:NSCaseInsensitiveSearch] == NSOrderedSame)
 	{
 		return DTXRequestDocument.class;
 	}

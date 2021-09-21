@@ -82,22 +82,6 @@ The default value is an empty set.
 Record log output during profiling.
 The default value is `true`.
 
-#### `profileReactNative`
-
-Profile React Native application.
-Currently, only one active React Native bridge is supported.
-The default value is `true`.
-
-#### `recordReactNativeBridgeData`
-
-Record React Native bridge data during profiling.
-The default value is `false`.
-
-#### `recordReactNativeTimersAsEvents`
-
-Record React Native timers (created using `setTimeout()` in JavaScript) as events.
-The default value is `false`.
-
 #### `recordingFileURL`
 
 The recording file URL to save to.

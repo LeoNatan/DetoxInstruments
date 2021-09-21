@@ -2,8 +2,8 @@
 //  DTXProfilerAPI-Private.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 5/18/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 5/18/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #ifndef DTXProfilerAPI_Private_h
@@ -203,31 +203,6 @@ void __DTXProfilerMarkNetworkResponseEnd(NSURLResponse* response, NSData* data, 
 {
 	__DTXProfilerEnumerateActiveProfilersWithBlock(^(DTXProfiler *profiler) {
 		[profiler _networkRecorderDidFinishWithResponse:response data:data error:error forRequestWithUniqueIdentifier:uniqueIdentifier timestamp:timestamp];
-	});
-}
-
-static
-DTX_ALWAYS_INLINE
-void __DTXProfilerAddRNBridgeDataCapture(NSString* functionName, NSArray<NSString*>* arguments, NSString* returnValue, NSString* exception, BOOL isFromNative)
-{
-	if(arguments.count == 0)
-	{
-		return;
-	}
-	
-	NSDate* timestamp = NSDate.date;
-	
-	__DTXProfilerEnumerateActiveProfilersWithBlock(^(DTXProfiler *profiler) {
-		[profiler _addRNDataFromFunction:functionName arguments:arguments returnValue:returnValue exception:exception isFromNative:isFromNative timestamp:timestamp];
-	});
-}
-
-static
-DTX_ALWAYS_INLINE
-void __DTXProfilerAddRNAsyncStorageOperation(NSDate* timestamp, int64_t fetchCount, double fetchDuration, int64_t saveCount, double saveDuration, NSString* operation, BOOL isDataKeysOnly, NSArray* data, NSDictionary* error)
-{
-	__DTXProfilerEnumerateActiveProfilersWithBlock(^(DTXProfiler *profiler) {
-		[profiler _addRNAsyncStorageOperation:operation fetchCount:fetchCount fetchDuration:fetchDuration saveCount:saveCount saveDuration:saveDuration isDataKeysOnly:isDataKeysOnly data:data error:error timestamp:timestamp];
 	});
 }
 

@@ -13,7 +13,4 @@
    <FileRef
       location = "group:SampleApps/StressTestApp/StressTestApp.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:CLI/CLI.xcodeproj">
-   </FileRef>
 </Workspace>

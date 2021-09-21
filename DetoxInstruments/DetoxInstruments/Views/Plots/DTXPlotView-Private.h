@@ -2,8 +2,8 @@
 //  DTXPlotView-Private.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 1/3/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 1/3/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPlotView.h"
@@ -17,12 +17,12 @@
 
 @end
 
-static DTX_ALWAYS_INLINE double lerp(double a, double b, double t)
+static LN_ALWAYS_INLINE double lerp(double a, double b, double t)
 {
 	return a + (b - a) * t;
 }
 
-static DTX_ALWAYS_INLINE void __DTXFillZones(DTXPlotView* self, NSMutableArray<_DTXDrawingZone*>* zones)
+static LN_ALWAYS_INLINE void __DTXFillZones(DTXPlotView* self, NSMutableArray<_DTXDrawingZone*>* zones)
 {
 	CGFloat graphViewRatio = self.bounds.size.width / self.plotRange.length;
 	CGFloat offset = - graphViewRatio * self.plotRange.position;
@@ -67,7 +67,7 @@ static DTX_ALWAYS_INLINE void __DTXFillZones(DTXPlotView* self, NSMutableArray<_
 	}
 }
 
-static DTX_ALWAYS_INLINE double __DTXBottomInset(NSEdgeInsets insets, BOOL isFlipped)
+static LN_ALWAYS_INLINE double __DTXBottomInset(NSEdgeInsets insets, BOOL isFlipped)
 {
 	return isFlipped == NO ? insets.bottom : insets.top;
 }

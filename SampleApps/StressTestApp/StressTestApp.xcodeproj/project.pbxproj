@@ -444,7 +444,7 @@
 				CODE_SIGN_ENTITLEMENTS = StressTestApp/StressTestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
+				DEVELOPMENT_TEAM = S9QFG2VH2E;
 				ENABLE_BITCODE = NO;
 				IBSC_ERRORS = NO;
 				IBSC_WARNINGS = NO;
@@ -454,7 +454,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wix.StressTestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LeoNatan.StressTestApp-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "StressTestApp/StressTestApp-Bridging-Header.h";
@@ -471,7 +471,7 @@
 				CODE_SIGN_ENTITLEMENTS = StressTestApp/StressTestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
-				DEVELOPMENT_TEAM = XPHGA2FMQQ;
+				DEVELOPMENT_TEAM = S9QFG2VH2E;
 				ENABLE_BITCODE = NO;
 				IBSC_ERRORS = NO;
 				IBSC_WARNINGS = NO;
@@ -481,7 +481,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wix.StressTestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LeoNatan.StressTestApp-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "StressTestApp/StressTestApp-Bridging-Header.h";

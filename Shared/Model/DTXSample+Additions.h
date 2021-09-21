@@ -2,8 +2,8 @@
 //  DTXSample+Additions.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 18/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 18/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXSample+CoreDataClass.h"
@@ -26,10 +26,6 @@ typedef NS_ENUM(NSUInteger, DTXSampleType) {
 	
 	DTXSampleTypeTag					        	= 200,
 	DTXSampleTypeGroup					        	= 1000,
-	
-	DTXSampleTypeReactNativePerformanceType     	= 10000,
-	DTXSampleTypeReactNativeBridgeDataType      	= 10001,
-	DTXSampleTypeReactNativeAsyncStorageType      	= 10002,
 	
 	DTXSampleTypeUser					        	= 20000,
 	

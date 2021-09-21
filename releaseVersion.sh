@@ -212,23 +212,6 @@ if [ -z "$DRY_RUN" ]; then
 fi
 
 if [ -z "$DRY_RUN" ]; then
-	echo -e "\033[1;34mCreating an NPM release\033[0m"
-	pushd . &> /dev/null
-	cd Distribution
-	mv package package.json
-	NPM_VERSION="${SHORT_VERSION}"
-	if [[ $(echo ${NPM_VERSION} | grep -o "\." | grep -c "\.") == 1 ]]; then
-		NPM_VERSION="${NPM_VERSION}."
-	fi
-	NPM_VERSION="${NPM_VERSION}${BUILD_NUMBER}"	
-	npm version "${NPM_VERSION}" --allow-same-version &> /dev/null
-	npm publish
-	mv package.json package
-	git checkout package
-	popd &> /dev/null
-fi
-
-if [ -z "$DRY_RUN" ]; then
 	echo -e "\033[1;34mOpening archive in Xcode\033[0m"
 	open "${ARCHIVE}"
 	sleep 8

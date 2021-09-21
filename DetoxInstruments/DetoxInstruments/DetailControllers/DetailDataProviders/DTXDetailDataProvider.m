@@ -2,8 +2,8 @@
 //  DTXDetailDataProvider.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 08/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 08/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <LNInterpolation/LNInterpolation.h>
@@ -21,8 +21,8 @@
 #import "DTXSignpostProtocol.h"
 
 #if DEBUG
-#import "DTXLogging.h"
-DTX_CREATE_LOG(DetailDataProvider)
+#import "LNLogging.h"
+LN_CREATE_LOG(DetailDataProvider)
 #endif
 
 const CGFloat DTXAutomaticColumnWidth = -1.0;
@@ -512,7 +512,7 @@ const CGFloat DTXAutomaticColumnWidth = -1.0;
 	id item = [_managedOutlineView itemAtRow:_managedOutlineView.selectedRow];
 	
 //#if DEBUG
-//	dtx_log_debug(@"Selection in item view: %@", @([_managedOutlineView childIndexForItem:item]));
+//	ln_log_debug(@"Selection in item view: %@", @([_managedOutlineView childIndexForItem:item]));
 //#endif
 	
 	if(item == nil)

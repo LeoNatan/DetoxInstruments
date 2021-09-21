@@ -67,7 +67,7 @@ EXPLICIT_INSTRUMENTS_APP_PATH=
 
 <span class="pl-k">if</span> [ <span class="pl-k">-z</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$EXPLICIT_INSTRUMENTS_APP_PATH</span><span class="pl-pds">"</span></span> ]<span class="pl-k">;</span> <span class="pl-k">then</span>
   <span class="pl-c"><span class="pl-c">#</span> Find where the Detox Instruments app is installed</span>
-  INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">$(</span>mdfind kMDItemCFBundleIdentifier=<span class="pl-s"><span class="pl-pds">"</span>com.wix.DetoxInstruments<span class="pl-pds">"</span></span> <span class="pl-k">|</span> head -n 1<span class="pl-pds">)</span></span>
+  INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">$(</span>mdfind kMDItemCFBundleIdentifier=<span class="pl-s"><span class="pl-pds">"</span>com.LeoNatan.DetoxInstruments<span class="pl-pds">"</span></span> <span class="pl-k">|</span> head -n 1<span class="pl-pds">)</span></span>
 <span class="pl-k">else</span>
   INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$EXPLICIT_INSTRUMENTS_APP_PATH</span><span class="pl-pds">"</span></span>
 <span class="pl-k">fi</span>
@@ -100,7 +100,7 @@ EXPLICIT_INSTRUMENTS_APP_PATH=
 
 <span class="pl-k">if</span> [ <span class="pl-k">-z</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$EXPLICIT_INSTRUMENTS_APP_PATH</span><span class="pl-pds">"</span></span> ]<span class="pl-k">;</span> <span class="pl-k">then</span>
   <span class="pl-c"><span class="pl-c">#</span> Find where the Detox Instruments app is installed</span>
-  INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">$(</span>mdfind kMDItemCFBundleIdentifier=<span class="pl-s"><span class="pl-pds">"</span>com.wix.DetoxInstruments<span class="pl-pds">"</span></span> <span class="pl-k">|</span> head -n 1<span class="pl-pds">)</span></span>
+  INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">$(</span>mdfind kMDItemCFBundleIdentifier=<span class="pl-s"><span class="pl-pds">"</span>com.LeoNatan.DetoxInstruments<span class="pl-pds">"</span></span> <span class="pl-k">|</span> head -n 1<span class="pl-pds">)</span></span>
 <span class="pl-k">else</span>
   INSTRUMENTS_APP_PATH=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$EXPLICIT_INSTRUMENTS_APP_PATH</span><span class="pl-pds">"</span></span>
 <span class="pl-k">fi</span>

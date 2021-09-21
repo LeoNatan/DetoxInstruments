@@ -2,13 +2,12 @@
 //  DTXEventInspectorDataProvider.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 7/4/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 7/4/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXEventInspectorDataProvider.h"
 #import "DTXSignpostSample+UIExtensions.h"
-#import "DTXRNStackTraceParser.h"
 #import "DTXEventStatusPrivate.h"
 #import "DTXSignpostAdditionalInfoEndProxy.h"
 
@@ -32,11 +31,6 @@
 //	DTXRNSymbolicateJSCBacktrace
 	
 	return eventSample.stackTrace;
-}
-
-- (NSString*)stackTraceFrameStringForObject:(id)obj includeFullFormat:(BOOL)fullFormat
-{
-	return [DTXRNStackTraceParser stackTraceFrameStringForObject:obj includeFullFormat:fullFormat];
 }
 
 - (DTXInspectorContentTableDataSource*)inspectorTableDataSource

@@ -2,12 +2,12 @@
 //  DTXRemoteTarget-Private.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 23/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 23/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteTarget.h"
-#import "DTXSocketConnection.h"
+#import "LNSocketConnection.h"
 
 @interface DTXRemoteTarget ()
 
@@ -18,7 +18,6 @@
 @property (nonatomic, copy, readwrite) NSImage* deviceSnapshot;
 @property (nonatomic, copy, readwrite) NSDictionary* deviceInfo;
 @property (nonatomic, strong, readwrite) NSImage* screenSnapshot;
-@property (nonatomic, readwrite) BOOL hasReactNative;
 
 @property (nonatomic, copy, readonly) NSString* hostName;
 @property (nonatomic, assign, readonly) NSInteger port;

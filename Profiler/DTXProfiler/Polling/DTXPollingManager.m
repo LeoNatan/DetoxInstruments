@@ -2,13 +2,13 @@
 //  DTXPollingManager.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 25/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 25/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXPollingManager.h"
 
-DTX_CREATE_LOG(PollingManager);
+LN_CREATE_LOG(PollingManager);
 
 @implementation DTXPollingManager
 {
@@ -36,7 +36,7 @@ DTX_CREATE_LOG(PollingManager);
 		_pollables = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsStrongMemory];
 		
 		dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qos_class_main(), 0);
-		_measurementsTimerQueue = dtx_dispatch_queue_create_autoreleasing("com.wix.DTXProfilerMeasurementsTimerQueue", qosAttribute);
+		_measurementsTimerQueue = ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXProfilerMeasurementsTimerQueue", qosAttribute);
 		
 		_measurementsTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _measurementsTimerQueue);
 		uint64_t interval = timeInterval * NSEC_PER_SEC;
@@ -68,7 +68,7 @@ DTX_CREATE_LOG(PollingManager);
 
 - (void)_pollPollables
 {
-//	dtx_log_debug(@"Polling");
+//	ln_log_debug(@"Polling");
 	
 	for(id<DTXPollable> pollable in [[_pollables copy] keyEnumerator])
 	{

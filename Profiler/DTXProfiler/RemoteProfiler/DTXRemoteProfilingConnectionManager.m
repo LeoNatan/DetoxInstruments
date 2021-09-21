@@ -2,12 +2,12 @@
 //  DTXRemoteProfilingConnectionManager.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 11/25/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 11/25/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteProfilingConnectionManager.h"
-#import "DTXSocketConnection.h"
+#import "LNSocketConnection.h"
 #import "DTXRemoteProfiler.h"
 #import "DTXProfilingBasics.h"
 #import "DTXDeviceInfo.h"
@@ -17,12 +17,11 @@
 #import "DTXUIPasteboardParser.h"
 #import "DTXViewHierarchySnapshotter.h"
 #import "DTXWindowsSnapshotter.h"
-#import "DTXReactNativeAsyncStorageSupport.h"
 #import "DTXLiveLogStreamer.h"
 
-DTX_CREATE_LOG(RemoteProfilingConnectionManager);
+LN_CREATE_LOG(RemoteProfilingConnectionManager);
 
-@interface DTXRemoteProfilingConnectionManager () <DTXSocketConnectionDelegate, DTXRemoteProfilerDelegate>
+@interface DTXRemoteProfilingConnectionManager () <LNSocketConnectionDelegate, DTXRemoteProfilerDelegate>
 
 @end
 
@@ -30,7 +29,7 @@ DTX_CREATE_LOG(RemoteProfilingConnectionManager);
 {
 	BOOL _aborted;
 	
-	DTXSocketConnection* _connection;
+	LNSocketConnection* _connection;
 	DTXRemoteProfiler* _remoteProfiler;
 	DTXProfiler* _localProfiler;
 	
@@ -54,7 +53,7 @@ DTX_CREATE_LOG(RemoteProfilingConnectionManager);
 	if(self)
 	{
 		dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qos_class_main(), 0);
-		_connection = [[DTXSocketConnection alloc] initWithInputStream:inputStream outputStream:outputStream delegateQueue:dtx_dispatch_queue_create_autoreleasing("com.wix.DTXRemoteProfiler-Networking", qosAttribute)];
+		_connection = [[LNSocketConnection alloc] initWithInputStream:inputStream outputStream:outputStream delegateQueue:ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXRemoteProfiler-Networking", qosAttribute)];
 		_connection.delegate = self;
 		
 		[_connection open];
@@ -277,20 +276,6 @@ CLANG_POP
 				[self _setPasteboard:pasteboard];
 				
 			}	break;
-			case DTXRemoteProfilingCommandTypeGetAsyncStorage:
-			{
-				[self _sendAsyncStorage];
-				
-			}	break;
-			case DTXRemoteProfilingCommandTypeChangeAsyncStorageItem:
-			{
-				NSString* key = cmd[@"key"];
-				NSString* previousKey = cmd[@"previousKey"];
-				id value = cmd[@"value"];
-				DTXRemoteProfilingChangeType type = [cmd[@"type"] unsignedIntegerValue];
-				
-				[self _changeAsyncStorageItemWithKey:key changeType:type value:value previousKey:previousKey];
-			}	break;
 			case DTXRemoteProfilingCommandTypeCaptureViewHierarchy:
 			{
 				[self _sendViewHierarchy];
@@ -486,24 +471,6 @@ CLANG_POP
 	[DTXUIPasteboardParser setGeneralPasteboardItems:pasteboard];
 }
 
-#pragma mark RN Async Storage
-
-- (void)_sendAsyncStorage
-{
-	[DTXReactNativeAsyncStorageSupport readAsyncStorageKeysWithCompletionHandler:^(NSDictionary *asyncStorage) {
-		NSMutableDictionary* cmd = [NSMutableDictionary new];
-		cmd[@"cmdType"] = @(DTXRemoteProfilingCommandTypeGetAsyncStorage);
-		cmd[@"asyncStorage"] = asyncStorage;
-		
-		[self _writeCommand:cmd completionHandler:nil];
-	}];
-}
-
-- (void)_changeAsyncStorageItemWithKey:(NSString*)key changeType:(DTXRemoteProfilingChangeType)changeType value:(id)value previousKey:(NSString*)previousKey
-{
-	[DTXReactNativeAsyncStorageSupport changeAsyncStorageItemWithKey:key changeType:changeType value:value previousKey:previousKey completionHandler:nil];
-}
-
 #pragma mark View Hierarchy
 
 - (void)_sendViewHierarchy
@@ -546,23 +513,23 @@ CLANG_POP
 {
 	if(error)
 	{
-		dtx_log_error(@"Remote profiler finished with error: %@", error);
+		ln_log_error(@"Remote profiler finished with error: %@", error);
 	}
 	else
 	{
-		dtx_log_info(@"Remote profiler finished");
+		ln_log_info(@"Remote profiler finished");
 	}
 	
 	[self.delegate remoteProfilingConnectionManager:self didFinishWithError:error];
 }
 
-#pragma mark DTXSocketConnectionDelegate
+#pragma mark LNSocketConnectionDelegate
 
-- (void)readClosedForSocketConnection:(DTXSocketConnection*)socketConnection;
+- (void)readClosedForSocketConnection:(LNSocketConnection*)socketConnection;
 {
 	[socketConnection closeWrite];
 	
-	dtx_log_info(@"Socket connection closed for reading");
+	ln_log_info(@"Socket connection closed for reading");
 	
 	_connection = nil;
 	_logStreamer = nil;
@@ -575,11 +542,11 @@ CLANG_POP
 	[self.delegate remoteProfilingConnectionManager:self didFinishWithError:nil];
 }
 
-- (void)writeClosedForSocketConnection:(DTXSocketConnection*)socketConnection;
+- (void)writeClosedForSocketConnection:(LNSocketConnection*)socketConnection;
 {
 	[socketConnection closeRead];
 	
-	dtx_log_info(@"Socket connection closed for writing");
+	ln_log_info(@"Socket connection closed for writing");
 	
 	_connection = nil;
 	_logStreamer = nil;

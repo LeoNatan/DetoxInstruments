@@ -2,16 +2,13 @@
 //  DTXRecordingDocument.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 22/05/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 22/05/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 #import "DTXDocument.h"
 #import "DTXInstrumentsModel.h"
-#if ! CLI && ! PROFILER_PREVIEW_EXTENSION
-#import "DTXRNJSCSourceMapsSupport.h"
-#endif
 
 #if ! CLI && ! PROFILER_PREVIEW_EXTENSION
 #import "DTXRemoteTarget.h"
@@ -51,8 +48,6 @@ typedef NS_ENUM(NSUInteger, DTXRecordingLocalRecordingProfilingState) {
 - (void)performBackgroundTask:(void (^)(NSManagedObjectContext *))block;
 
 #if ! CLI && ! PROFILER_PREVIEW_EXTENSION
-@property (nonatomic, strong, readonly) DTXSourceMapsParser* sourceMapsParser;
-
 - (void)readyForRecordingIfNeeded;
 - (void)addTag;
 - (void)stopLiveRecording;

@@ -2,8 +2,8 @@
 //  DTXBase.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 7/24/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 7/24/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #ifndef DTXBase_h

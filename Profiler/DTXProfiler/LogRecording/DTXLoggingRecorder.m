@@ -2,8 +2,8 @@
 //  DTXLoggingRecorder.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 28/06/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 28/06/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXLoggingRecorder.h"
@@ -11,7 +11,7 @@
 #import <pthread.h>
 #import "DTXLiveLogStreamer.h"
 
-DTX_CREATE_LOG(LoggingRecorder);
+LN_CREATE_LOG(LoggingRecorder);
 
 DTXLiveLogStreamer* _streamer;
 
@@ -36,12 +36,6 @@ static int __pipe[2];
 			DTXProfilerAddLogEntry(timestamp, (DTXProfilerLogLevel)level, subsystem, category, message);
 		}];
 		
-		dtx_log_info(@"Info");
-		dtx_log_debug(@"Debug");
-		dtx_log_error(@"Error");
-		dtx_log_fault(@"Fault");
-		
-//		NSLog(@"Hey there!");
 		return;
 		
 	LEGACY:
@@ -62,7 +56,7 @@ static int __pipe[2];
 	close(__pipe[1]);
 	
 	dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, qos_class_main(), 0);
-	__log_queue = dtx_dispatch_queue_create_autoreleasing("com.wix.DTXProfilerLogIOQueue", qosAttribute);
+	__log_queue = ln_dispatch_queue_create_autoreleasing("com.LeoNatan.DTXProfilerLogIOQueue", qosAttribute);
 	__log_io = dispatch_io_create(DISPATCH_IO_STREAM, __pipe[0], __log_queue, ^(__unused int error) {});
 	
 	dispatch_io_set_low_water(__log_io, 1);

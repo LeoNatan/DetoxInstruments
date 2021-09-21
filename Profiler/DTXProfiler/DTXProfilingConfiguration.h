@@ -2,8 +2,8 @@
 //  DTXProfilingConfiguration.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 06/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 06/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 @import Foundation;
@@ -151,47 +151,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) BOOL recordLogOutput;
 
-/**
- *  Profile React Native application.
- *
- *  Currently, only one active React Native bridge is supported.
- *  If you have different needs, open an issue at @ref https://github.com/wix/DetoxInstruments/issues
- *
- *  The default value is @c true.
- */
-@property (nonatomic, readonly) BOOL profileReactNative;
-
-/**
- *  Record React Native bridge data during profiling.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readonly) BOOL recordReactNativeBridgeData;
-
-/**
- *  Record React Native async storage data during profiling.
- *
- *  The default value is @c false.
-*/
-@property (nonatomic, readonly) BOOL recordReactNativeAsyncStorageData;
-
-/**
- *  Record React Native timers (created using @c setTimeout() in JavaScript) as activity.
- *  Timers will appear as intervals in the Activity instrument.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readonly) BOOL recordReactNativeTimersAsActivity;
-
-/**
- *  Record internal React Native activity.
- *
- *  Taps into the internal profiling mechanisms to collect internal React Native profiling activity.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readonly) BOOL recordInternalReactNativeActivity;
-
 /* Output Configuration */
 
 /**
@@ -208,13 +167,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The default value is a file name with the date and time of the recording, in the documents folder of the profiled app.
  */
 @property (nonatomic, copy, null_resettable, readonly) NSURL* recordingFileURL;
-
-@end
-
-@interface DTXProfilingConfiguration (Deprecated)
-
-@property (nonatomic, readonly) BOOL recordReactNativeTimersAsEvents __attribute__((deprecated("Use recordReactNativeTimersAsActivity instead.")));
-@property(nonatomic, readonly) BOOL recordInternalReactNativeEvents __attribute__((deprecated("Use recordInternalReactNativeActivity instead.")));
 
 @end
 
@@ -356,47 +308,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readwrite) BOOL recordActivity;
 
-/**
- *  Profile React Native application.
- *
- *  Currently, only one active React Native bridge is supported.
- *  If you have different needs, open an issue at @ref https://github.com/wix/DetoxInstruments/issues
- *
- *  The default value is @c true.
- */
-@property (nonatomic, readwrite) BOOL profileReactNative;
-
-/**
- *  Record React Native bridge data during profiling.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readwrite) BOOL recordReactNativeBridgeData;
-
-/**
- *  Record React Native async storage data during profiling.
- *
- *  The default value is @c false.
-*/
-@property (nonatomic, readwrite) BOOL recordReactNativeAsyncStorageData;
-
-/**
- *  Record React Native timers (created using @c setTimeout() in JavaScript) as activity.
- *  Timers will appear as intervals in the Activity instrument.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readwrite) BOOL recordReactNativeTimersAsActivity;
-
-/**
- *  Record internal React Native activity.
- *
- *  Taps into the internal profiling mechanisms to collect internal React Native profiling activity.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readwrite) BOOL recordInternalReactNativeActivity;
-
 /* Output Configuration */
 
 /**
@@ -413,13 +324,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The default value is a file name with the date and time of the recording, in the documents folder of the profiled app.
  */
 @property (nonatomic, copy, null_resettable, readwrite) NSURL* recordingFileURL;
-
-@end
-
-@interface DTXMutableProfilingConfiguration (Deprecated)
-
-@property (nonatomic, readonly) BOOL recordReactNativeTimersAsEvents __attribute__((deprecated("Use recordReactNativeTimersAsActivity instead.")));
-@property(nonatomic, readwrite) BOOL recordInternalReactNativeEvents __attribute__((deprecated("Use recordInternalReactNativeActivity instead.")));
 
 @end
 

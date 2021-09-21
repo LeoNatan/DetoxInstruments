@@ -2,8 +2,8 @@
 //  DTXRPCookiesEditor.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/3/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/3/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRPCookiesEditor.h"
@@ -26,19 +26,19 @@
 
 - (void)setCookies:(NSDictionary<NSString *,NSString *> *)cookies
 {
-	self.plistEditor.propertyList = cookies;
+	self.plistEditor.propertyListObject = cookies;
 }
 
 - (NSDictionary<NSString *,NSString *> *)cookies
 {
-	return (id)self.plistEditor.propertyList;
+	return (id)self.plistEditor.propertyListObject;
 }
 
 #pragma mark LNPropertyListEditorDelegate
 
 - (id)propertyListEditor:(LNPropertyListEditor *)editor defaultPropertyListForAddingInNode:(LNPropertyListNode*)node
 {
-	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyList:@"Value"];
+	LNPropertyListNode* rv = [[LNPropertyListNode alloc] initWithPropertyListObject:@"Value"];
 	rv.key = @"Cookie";
 	
 	return rv;

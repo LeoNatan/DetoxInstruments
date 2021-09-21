@@ -2,7 +2,7 @@
 //  main.m
 //  DTXProfilerShimTest
 //
-//  Created by Leo Natan (Wix) on 11/25/18.
+//  Created by Leo Natan on 11/25/18.
 //  Copyright © 2018 Leo Natan. All rights reserved.
 //
 

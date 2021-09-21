@@ -2,8 +2,8 @@
 //  DTXProfilingTargetManagementWindowController.h
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 4/19/18.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 4/19/18.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "CCNPreferencesWindowController.h"
@@ -17,7 +17,6 @@
 - (void)noteProfilingTargetDidLoadUserDefaults;
 - (void)noteProfilingTargetDidLoadCookies;
 - (void)noteProfilingTargetDidLoadPasteboardContents;
-- (void)noteProfilingTargetDidLoadAsyncStorage;
 
 - (void)showSaveDialogForSavingData:(NSData*)data dataWasZipped:(BOOL)wasZipped;
 

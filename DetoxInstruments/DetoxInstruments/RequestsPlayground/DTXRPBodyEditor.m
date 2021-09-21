@@ -2,8 +2,8 @@
 //  DTXRPBodyEditor.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 3/6/19.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 3/6/19.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXRPBodyEditor.h"
@@ -139,7 +139,7 @@
 -(NSData*)_urlEncodedBodyFromPropertyList
 {
 	NSMutableString* rv = [NSMutableString new];
-	[(NSDictionary*)self.plistEditor.propertyList enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+	[(NSDictionary*)self.plistEditor.propertyListObject enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
 		key = [key stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.alphanumericCharacterSet];
 		obj = [obj stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.alphanumericCharacterSet];
 		[rv appendFormat:@"%@=%@&", key, obj];
@@ -194,7 +194,7 @@
 	id obj = [self _propertyListFromURLEncodedFormData:_body encodingCharset:nil didContainIllegalCharacter:&containIllegalCharacter];
 	if(obj != nil)
 	{
-		self.plistEditor.propertyList = obj;
+		self.plistEditor.propertyListObject = obj;
 	}
 	else
 	{
@@ -205,7 +205,7 @@
 - (BOOL)_isContentTypeBinary
 {
 	CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, CF(self.contentType), NULL);
-	dtx_defer {
+	ln_defer {
 		if(UTI != NULL)
 		{
 			CFRelease(UTI);

@@ -2,8 +2,8 @@
 //  DTXProfilingConfiguration.h
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 06/07/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 06/07/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 @import Foundation;
@@ -143,39 +143,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The default value is @c true.
  */
 @property (nonatomic, readonly) BOOL recordLogOutput;
-
-/**
- *  Profile React Native application.
- *
- *  Currently, only one active React Native bridge is supported.
- *  If you have different needs, open an issue at @ref https://github.com/wix/DetoxInstruments/issues
- *
- *  The default value is @c true.
- */
-@property (nonatomic, readonly) BOOL profileReactNative;
-
-/**
- *  Record React Native bridge data during profiling.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readonly) BOOL recordReactNativeBridgeData;
-
-/**
- *  Record React Native timers (created using @c setTimeout() in JavaScript) as events.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readonly) BOOL recordReactNativeTimersAsEvents;
-
-/**
- *  Record internal React Native events.
- *
- *  Taps into the internal profiling mechanisms to collect internal React Native profiling events.
- *
- *  The default value is @c false.
- */
-@property(nonatomic, readonly) BOOL recordInternalReactNativeEvents;
 
 /* Output Configuration */
 
@@ -326,40 +293,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The default value is @c true.
  */
 @property (nonatomic, readwrite) BOOL recordLogOutput;
-
-/**
- *  Profile React Native application.
- *
- *  Currently, only one active React Native bridge is supported.
- *  If you have different needs, open an issue at @ref https://github.com/wix/DetoxInstruments/issues
- *
- *  The default value is @c true.
- */
-@property (nonatomic, readwrite) BOOL profileReactNative;
-
-/**
- *  Record React Native bridge data during profiling.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readwrite) BOOL recordReactNativeBridgeData;
-
-/**
- *  Record React Native timers (created using @c setTimeout() in JavaScript) as events.
- *  Timers will appear as interval events in the Events instrument.
- *
- *  The default value is @c false.
- */
-@property (nonatomic, readwrite) BOOL recordReactNativeTimersAsEvents;
-
-/**
- *  Record internal React Native events.
- *
- *  Taps into the internal profiling mechanisms to collect internal React Native profiling events.
- *
- *  The default value is @c false.
- */
-@property(nonatomic, readwrite) BOOL recordInternalReactNativeEvents;
 
 /* Output Configuration */
 

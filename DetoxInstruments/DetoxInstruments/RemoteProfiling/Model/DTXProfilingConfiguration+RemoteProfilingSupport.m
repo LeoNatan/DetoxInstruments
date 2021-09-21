@@ -2,8 +2,8 @@
 //  DTXProfilingConfiguration+RemoteProfilingSupport.m
 //  DetoxInstruments
 //
-//  Created by Leo Natan (Wix) on 07/08/2017.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 07/08/2017.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXProfilingConfiguration+RemoteProfilingSupport.h"
@@ -47,12 +47,11 @@
 	NSArray* categories = [NSUserDefaults.standardUserDefaults objectForKey:@"DTXSelectedProfilingConfiguration__ignoredEventCategoriesArray"] ?: @[];
 	rv.ignoredEventCategories = [NSSet setWithArray:categories];
 	
-	if(rv.recordPerformance == NO && rv.recordNetwork == NO && rv.recordEvents == NO && rv.profileReactNative == NO)
+	if(rv.recordPerformance == NO && rv.recordNetwork == NO && rv.recordEvents == NO)
 	{
 		[rv setValue:@YES forKey:@"recordPerformance"];
 		[rv setValue:@YES forKey:@"recordNetwork"];
 		[rv setValue:@YES forKey:@"recordEvents"];
-		[rv setValue:@YES forKey:@"profileReactNative"];
 	}
 	
 	return rv;

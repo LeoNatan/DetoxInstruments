@@ -2,8 +2,8 @@
 //  DTXLiveLogStreamer.m
 //  DTXProfiler
 //
-//  Created by Leo Natan (Wix) on 8/27/20.
-//  Copyright © 2017-2021 Wix. All rights reserved.
+//  Created by Leo Natan on 8/27/20.
+//  Copyright © 2017-2021 Leo Natan. All rights reserved.
 //
 
 #import "DTXLiveLogStreamer.h"
@@ -113,7 +113,7 @@ static BOOL wasLoaded = NO;
 		uint8_t log_level = os_log_get_type(log_message);
 		
 		char* msg = os_log_copy_formatted_message(log_message);
-		dtx_defer {
+		ln_defer {
 			if(msg)
 			{
 				free(msg);

@@ -6,7 +6,7 @@ Detox Instruments is a performance–analysis and testing framework, designed to
 
 ![Detox Instruments](Documentation/Resources/Readme_Intro.png "Detox Instruments")
 
-Incorporating Detox Instruments into the development workflow from the beginning of the app development process can save time later by helping find issues early in the development cycle. Detox Instruments has first–class support for React Native, allowing seamless analysis of the entire app lifecycle in one place.
+Incorporating Detox Instruments into the development workflow from the beginning of the app development process can save time later by helping find issues early in the development cycle.
 
 Detox Instruments supports profiling the following metrics:
 
@@ -21,12 +21,6 @@ Detox Instruments supports profiling the following metrics:
 * Network activity
   * Full request & response header and data collection and inspection
 * Developer events
-* React Native profiling (0.62.x and above)
-  * JavaScript thread CPU load
-  * Bridge call counters
-  * Bridge data counters
-  * Bridge data collection
-  * Async storage metrics & data
 * Log output recording
 
 For a list of available instruments and their description, see [Available Instruments](Documentation/AvailableInstruments.md).
@@ -41,8 +35,6 @@ Detox Instruments includes the following app management utilities:
   - Modify user defaults in real time
 - Cookies
   - Create and modify the app's HTTP cookies
-- Async storage (React Native only)
-  - Modify the async storage store in real time
 
 For a detailed overview, see [App Management](Documentation/AppManagement.md).
 
@@ -126,6 +118,8 @@ For a list of available instruments and their description, see [Available Instru
 Detox Instruments includes a utility for replaying and modifying network requests, called Requests Playground. These requests can be saved as a document for future reference and testing. For more information, see [Requests Playground](Documentation/RequestsPlayground.md).
 
 ## Acknowledgements
+
+Originally developed by me for Wix.
 
 See [Acknowledgements](Documentation/Acknowledgements.md)
 

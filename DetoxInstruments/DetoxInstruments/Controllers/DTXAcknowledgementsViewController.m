@@ -3,7 +3,7 @@
 //  DetoxInstruments
 //
 //  Created by Leo Natan on 3/26/18.
-//  Copyright © 2017-2021 Leo Natan. All rights reserved.
+//  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #import "DTXAcknowledgementsViewController.h"

@@ -22,13 +22,13 @@
 
 /* Begin PBXBuildFile section */
 		3900FBD321185F010054BA5E /* DTXProfilerAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 3900FBD221185F010054BA5E /* DTXProfilerAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3934DCC026FA91EB00B5EC24 /* LNLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 3934DCBE26FA91EB00B5EC24 /* LNLogging.m */; };
+		3934DCC126FA91EB00B5EC24 /* LNLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 3934DCBF26FA91EB00B5EC24 /* LNLogging.h */; };
 		39377AFB2107ADFF000A7D82 /* Impl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39377AFA2107ADFF000A7D82 /* Impl.m */; };
 		39377B0D2107B135000A7D82 /* DTXProfilerShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 39377B0C2107B135000A7D82 /* DTXProfilerShim.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3939238721AB3B720015A15F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3939238621AB3B720015A15F /* main.m */; };
 		3939238C21AB3BC30015A15F /* Impl.m in Sources */ = {isa = PBXBuildFile; fileRef = 39377AFA2107ADFF000A7D82 /* Impl.m */; };
-		394A975522A919BD0063A2CC /* DTXLoggingSubsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 394A975422A919BD0063A2CC /* DTXLoggingSubsystem.h */; };
-		394A975E22A91AFA0063A2CC /* DTXLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 394A975C22A91AFA0063A2CC /* DTXLogging.m */; };
-		394A975F22A91AFA0063A2CC /* DTXLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 394A975D22A91AFA0063A2CC /* DTXLogging.h */; };
+		394A975522A919BD0063A2CC /* LNLoggingSubsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 394A975422A919BD0063A2CC /* LNLoggingSubsystem.h */; };
 		395DE7D72417EB5D008D74D0 /* DTXProfilerShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3929507B2107A87300F7E3E1 /* DTXProfilerShim.framework */; };
 		395DE7D82417EB5D008D74D0 /* DTXProfilerShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3929507B2107A87300F7E3E1 /* DTXProfilerShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		399E34C624D30E06009C6FB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 399E34C524D30E06009C6FB0 /* Images.xcassets */; };
@@ -69,14 +69,14 @@
 		39215586210A8EF9002AF802 /* DTXProfilingConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTXProfilingConfiguration.h; sourceTree = "<group>"; };
 		3929507B2107A87300F7E3E1 /* DTXProfilerShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DTXProfilerShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3929507F2107A87300F7E3E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3934DCBE26FA91EB00B5EC24 /* LNLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNLogging.m; path = ../../../Shared/LNLoggingInfra/LNLogging.m; sourceTree = "<group>"; };
+		3934DCBF26FA91EB00B5EC24 /* LNLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNLogging.h; path = ../../../Shared/LNLoggingInfra/LNLogging.h; sourceTree = "<group>"; };
 		39377AFA2107ADFF000A7D82 /* Impl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Impl.m; sourceTree = "<group>"; };
 		39377B0C2107B135000A7D82 /* DTXProfilerShim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTXProfilerShim.h; sourceTree = "<group>"; };
 		3939237521AB3B710015A15F /* DTXProfilerShimTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DTXProfilerShimTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3939238521AB3B720015A15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3939238621AB3B720015A15F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		394A975422A919BD0063A2CC /* DTXLoggingSubsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTXLoggingSubsystem.h; sourceTree = "<group>"; };
-		394A975C22A91AFA0063A2CC /* DTXLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DTXLogging.m; path = ../../../Shared/DTXLoggingInfra/DTXLogging.m; sourceTree = "<group>"; };
-		394A975D22A91AFA0063A2CC /* DTXLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DTXLogging.h; path = ../../../Shared/DTXLoggingInfra/DTXLogging.h; sourceTree = "<group>"; };
+		394A975422A919BD0063A2CC /* LNLoggingSubsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNLoggingSubsystem.h; sourceTree = "<group>"; };
 		399E34C524D30E06009C6FB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		39A7BC78210A8F27003E9170 /* DTXEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTXEvents.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,9 +148,9 @@
 		394A975122A9196D0063A2CC /* Logging */ = {
 			isa = PBXGroup;
 			children = (
-				394A975D22A91AFA0063A2CC /* DTXLogging.h */,
-				394A975C22A91AFA0063A2CC /* DTXLogging.m */,
-				394A975422A919BD0063A2CC /* DTXLoggingSubsystem.h */,
+				3934DCBF26FA91EB00B5EC24 /* LNLogging.h */,
+				3934DCBE26FA91EB00B5EC24 /* LNLogging.m */,
+				394A975422A919BD0063A2CC /* LNLoggingSubsystem.h */,
 			);
 			path = Logging;
 			sourceTree = "<group>";
@@ -170,13 +170,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				39A7BC79210A8F27003E9170 /* DTXEvents.h in Headers */,
-				394A975F22A91AFA0063A2CC /* DTXLogging.h in Headers */,
 				39A7BC7A210A8F9B003E9170 /* DTXBase.h in Headers */,
+				3934DCC126FA91EB00B5EC24 /* LNLogging.h in Headers */,
 				39A7BC7C210A8F9B003E9170 /* DTXProfilingConfiguration.h in Headers */,
 				39A7BC7D210A8F9B003E9170 /* DTXProfiler.h in Headers */,
 				39377B0D2107B135000A7D82 /* DTXProfilerShim.h in Headers */,
 				3900FBD321185F010054BA5E /* DTXProfilerAPI.h in Headers */,
-				394A975522A919BD0063A2CC /* DTXLoggingSubsystem.h in Headers */,
+				394A975522A919BD0063A2CC /* LNLoggingSubsystem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,8 +303,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				394A975E22A91AFA0063A2CC /* DTXLogging.m in Sources */,
 				39377AFB2107ADFF000A7D82 /* Impl.m in Sources */,
+				3934DCC026FA91EB00B5EC24 /* LNLogging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

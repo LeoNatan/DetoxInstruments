@@ -3,7 +3,7 @@
 //  DTXProfilerShim
 //
 //  Created by Leo Natan on 7/24/18.
-//  Copyright © 2018 Leo Natan. All rights reserved.
+//  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

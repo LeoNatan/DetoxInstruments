@@ -3,7 +3,7 @@
 //  DTXProfilerShim
 //
 //  Created by Leo Natan on 7/24/18.
-//  Copyright © 2018 Leo Natan. All rights reserved.
+//  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #pragma clang diagnostic ignored "-Wprotocol"
@@ -12,11 +12,11 @@
 #pragma clang diagnostic ignored "-Wobjc-property-implementation"
 
 #import <DTXProfilerShim/DTXProfiler.h>
-#import "DTXLogging.h"
+#import "LNLogging.h"
 
-DTX_CREATE_LOG(ProfilerShim)
-#define shim_log_function() dtx_log_debug(@"%s called on shim framework", __FUNCTION__)
-#define shim_log_invocation(invocation) dtx_log_debug(@"%@ called on shim framework", NSStringFromSelector(invocation.selector))
+LN_CREATE_LOG(ProfilerShim)
+#define shim_log_function() ln_log_debug(@"%s called on shim framework", __FUNCTION__)
+#define shim_log_invocation(invocation) ln_log_debug(@"%@ called on shim framework", NSStringFromSelector(invocation.selector))
 
 @implementation DTXProfilingConfiguration
 

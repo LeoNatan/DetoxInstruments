@@ -105,13 +105,13 @@ ditto -c -k --sequesterRsrc --keepParent "${EXPORT_DIR}"/*.app "${ZIP_FILE}" &> 
 
 echo -e "\033[1;34mSubmitting to notarization service\033[0m"
 
-NOTARIZATION_UUID=$(xcrun altool --notarize-app --primary-bundle-id "com.wix.DetoxInstruments" --username "notary.user@outlook.com" --password "@keychain:notary_password" --file "$ZIP_FILE" 2>&1 | grep RequestUUID | awk '{print $3}')
+NOTARIZATION_UUID=$(xcrun altool --notarize-app --primary-bundle-id "com.LeoNatan.DetoxInstruments" --username "leo.natan.developer@outlook.com" --password "@keychain:notary_password" --file "$ZIP_FILE" 2>&1 | grep RequestUUID | awk '{print $3}')
 
 echo -e "\033[1;34mAwaiting notarization success for ${NOTARIZATION_UUID}\033[0m"
 
 NOTARIZATION_SUCCESS=0
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
-    PROGRESS=$(xcrun altool --notarization-info "${NOTARIZATION_UUID}" --username "notary.user@outlook.com" --password "@keychain:notary_password" 2>&1 )
+    PROGRESS=$(xcrun altool --notarization-info "${NOTARIZATION_UUID}" --username "leo.natan.developer@outlook.com" --password "@keychain:notary_password" 2>&1 )
     Echo "${PROGRESS}"
  
     if [ $? -ne 0 ] || [[ "${PROGRESS}" =~ "Invalid" ]] ; then
@@ -148,7 +148,7 @@ SUBMISSION_IN_ARCHIVE="${ARCHIVE}/Submissions/${NOTARIZATION_UUID}"
 mkdir -p "${SUBMISSION_IN_ARCHIVE}"
 cp -r "${EXPORT_DIR}/Detox Instruments.app" "${SUBMISSION_IN_ARCHIVE}/"
 
-LOG_URL=$(xcrun altool --notarization-info "${NOTARIZATION_UUID}" --username "lnatan@wix.com" --password "@keychain:notary_password" 2>&1 | grep LogFileURL | awk '{print $2}')
+LOG_URL=$(xcrun altool --notarization-info "${NOTARIZATION_UUID}" --username "leo.natan.developer@outlook.com" --password "@keychain:notary_password" 2>&1 | grep LogFileURL | awk '{print $2}')
 curl -o "${SUBMISSION_IN_ARCHIVE}/audit.log" "${LOG_URL}" &> /dev/null
 
 /usr/libexec/PlistBuddy -c "Add Distributions array" ${ARCHIVE}/Info.plist
@@ -181,7 +181,7 @@ if [ -z "$DRY_RUN" ]; then
 	git checkout master
 	git fetch
 	git pull --rebase
-	sed -i '' -e 's/url .*/url '"'https:\/\/github.com\/wix\/DetoxInstruments\/releases\/download\/${VERSION}\/$(basename ${ZIP_FILE})'"'/g' detox-instruments.rb
+	sed -i '' -e 's/url .*/url '"'https:\/\/github.com\/LeoNatan\/DetoxInstruments\/releases\/download\/${VERSION}\/$(basename ${ZIP_FILE})'"'/g' detox-instruments.rb
 	git add -A
 	git commit -m "Detox Instruments ${VERSION}" &> /dev/null
 	git push
@@ -197,18 +197,18 @@ fi
 
 if [ -z "$DRY_RUN" ]; then
 	echo -e "\033[1;34mCreating a GitHub release\033[0m"
-	gh release create --repo wix/DetoxInstruments "$VERSION" --title "$VERSION" --notes-file "${RELEASE_NOTES_FILE}"
+	gh release create --repo LeoNatan/DetoxInstruments "$VERSION" --title "$VERSION" --notes-file "${RELEASE_NOTES_FILE}"
 fi
 
 if [ -z "$DRY_RUN" ]; then
 	echo -e "\033[1;34mUploading ZIP attachment to release\033[0m"
-	gh release upload --repo wix/DetoxInstruments "$VERSION" "${ZIP_FILE}"
+	gh release upload --repo LeoNatan/DetoxInstruments "$VERSION" "${ZIP_FILE}"
 fi
 
 if [ -z "$DRY_RUN" ]; then
 	echo -e "\033[1;34mTriggering gh-pages rebuild\033[0m"
 	
-	curl -H "Authorization: token ${GITHUB_RELEASES_TOKEN}" -H "Content-Type: application/json; charset=UTF-8" -X PUT -d '{"message": "Rebuild GH Pages", "committer": { "name": "PublishScript", "email": "somefakeaddress@wix.com" }, "content": "LnB1Ymxpc2gK", "sha": "3f949857e8ed4cb106f9744e40b638a7aabf647f", "branch": "gh-pages"}' https://api.github.com/repos/wix/DetoxInstruments/contents/.publish | jq "."
+	curl -H "Authorization: token ${GITHUB_RELEASES_TOKEN}" -H "Content-Type: application/json; charset=UTF-8" -X PUT -d '{"message": "Rebuild GH Pages", "committer": { "name": "PublishScript", "email": "somefakeaddress@gmail.com" }, "content": "LnB1Ymxpc2gK", "sha": "3f949857e8ed4cb106f9744e40b638a7aabf647f", "branch": "gh-pages"}' https://api.github.com/repos/LeoNatan/DetoxInstruments/contents/.publish | jq "."
 fi
 
 if [ -z "$DRY_RUN" ]; then

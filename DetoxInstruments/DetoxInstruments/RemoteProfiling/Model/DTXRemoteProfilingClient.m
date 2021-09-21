@@ -3,14 +3,13 @@
 //  DetoxInstruments
 //
 //  Created by Leo Natan on 26/07/2017.
-//  Copyright © 2017-2021 Leo Natan. All rights reserved.
+//  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #import "DTXRemoteProfilingClient.h"
 #import "DTXProfilingBasics.h"
 #import "DTXRecording+UIExtensions.h"
 #import "DTXProfilingConfiguration+RemoteProfilingSupport.h"
-#import <DTXSourceMaps/DTXSourceMaps.h>
 #import <pthread.h>
 
 #import "LNLogging.h"
@@ -245,6 +244,7 @@ return; }\
 	
 	Class cls = NSClassFromString(entityDescription.managedObjectClassName);
 	__kindof DTXSample* sample = [[cls alloc] initWithPropertyListDictionaryRepresentation:sampleDict context:_managedObjectContext];
+	sample = sample;
 	
 	if(saveContext)
 	{

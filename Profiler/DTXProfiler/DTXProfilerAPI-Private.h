@@ -3,7 +3,7 @@
 //  DTXProfiler
 //
 //  Created by Leo Natan on 5/18/19.
-//  Copyright © 2017-2021 Leo Natan. All rights reserved.
+//  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #ifndef DTXProfilerAPI_Private_h

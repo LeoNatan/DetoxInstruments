@@ -1,14 +1,14 @@
 //
 //  LNLoggingSubsystem.h
-//  DetoxInstruments
+//  DTXProfiler
 //
-//  Created by Leo Natan on 1/9/19.
+//  Created by Leo Natan on 19/07/2017.
 //  Copyright © 2017-2022 Leo Natan. All rights reserved.
 //
 
 #ifndef LNLoggingSubsystem_h
 #define LNLoggingSubsystem_h
 
-#define LN_LOG_SUBSYSTEM "com.LeoNatan.DetoxInstruments"
+#define LN_LOG_SUBSYSTEM "com.LeoNatan.DTXProfilerShim"
 
 #endif /* LNLoggingSubsystem_h */

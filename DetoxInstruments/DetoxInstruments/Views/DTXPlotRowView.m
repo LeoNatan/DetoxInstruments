@@ -34,6 +34,14 @@
 	CGContextMoveToPoint(ctx, _tableView.tableColumns.firstObject.width, dirtyRect.origin.y);
 	CGContextAddLineToPoint(ctx, _tableView.tableColumns.firstObject.width, dirtyRect.origin.y + dirtyRect.size.height);
 	CGContextStrokePath(ctx);
+	
+	CGContextMoveToPoint(ctx, 0, self.bounds.size.height - 0.5);
+	CGContextAddLineToPoint(ctx, _tableView.tableColumns.firstObject.width - 0.5, self.bounds.size.height - 0.5);
+	CGContextStrokePath(ctx);
+	
+	CGContextMoveToPoint(ctx, _tableView.tableColumns.firstObject.width + 0.5, self.bounds.size.height - 0.5);
+	CGContextAddLineToPoint(ctx, _tableView.bounds.size.width, self.bounds.size.height - 0.5);
+	CGContextStrokePath(ctx);
 }
 
 - (void)awakeFromNib

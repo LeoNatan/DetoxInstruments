@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2127,6 +2127,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		39443F442194837E00E9C0EA /* Build Third-Party Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2146,6 +2147,7 @@
 		};
 		397AC318219456A6009E62BB /* Sign Sparkle with Hardened Runtime */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2179,6 +2181,7 @@
 		};
 		39DED08824D20228000010CE /* Update Build Numbers */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2804,7 +2807,10 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
-				WARNING_CFLAGS = "-Wno-arc-performSelector-leaks";
+				WARNING_CFLAGS = (
+					"-Wno-arc-performSelector-leaks",
+					"-Wno-objc-load-method",
+				);
 			};
 			name = Debug;
 		};
@@ -2852,7 +2858,10 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
-				WARNING_CFLAGS = "-Wno-arc-performSelector-leaks";
+				WARNING_CFLAGS = (
+					"-Wno-arc-performSelector-leaks",
+					"-Wno-objc-load-method",
+				);
 			};
 			name = Release;
 		};

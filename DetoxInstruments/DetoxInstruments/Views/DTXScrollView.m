@@ -143,7 +143,7 @@
 	DTXScroller* _horizontalScroller;
 }
 
-- (void)_scrollerStyleDidChange_DTX
+- (void)_scrollerStyleDidChange
 {
 	_horizontalScroller.scrollerStyle = [NSScroller preferredScrollerStyle];
 }
@@ -163,7 +163,7 @@
 	[_horizontalScroller _setIsHorizontal:YES];
 	[_horizontalScroller setOverlayScrollerTrackAlpha:0.0];
 	_horizontalScroller.scrollerStyle = [NSScroller preferredScrollerStyle];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_scrollerStyleDidChange_DTX) name:NSPreferredScrollerStyleDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_scrollerStyleDidChange) name:NSPreferredScrollerStyleDidChangeNotification object:nil];
 	
 	self.horizontalScroller.alphaValue = 0.0;
 	

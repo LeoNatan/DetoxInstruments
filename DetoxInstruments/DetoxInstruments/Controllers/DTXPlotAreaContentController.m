@@ -168,11 +168,11 @@
 		[_plotGroup setLocalStartTimestamp:self.document.firstRecording.defactoStartTimestamp endTimestamp:self.document.lastRecording.defactoEndTimestamp];
 	}
 	
-	_tableView.intercellSpacing = NSMakeSize(1, 0);
+	_tableView.intercellSpacing = NSMakeSize(0.5, 0.25);
 	
 #if ! PROFILER_PREVIEW_EXTENSION
 	DTXAxisHeaderPlotController* headerPlotController = [[DTXAxisHeaderPlotController alloc] initWithDocument:self.document isForTouchBar:NO];
-	[headerPlotController setUpWithView:_headerView insets:NSEdgeInsetsMake(0, _tableView.tableColumns.firstObject.width + 0.5, 0, 0)];
+	[headerPlotController setUpWithView:_headerView insets:NSEdgeInsetsMake(0, _tableView.tableColumns.firstObject.width - 0.375, 0, 0)];
 
 	[_plotGroup setHeaderPlotController:headerPlotController];
 #endif

@@ -31,12 +31,6 @@
 	self.textField.cell.lineBreakMode = NSLineBreakByWordWrapping;
 	self.textField.allowsDefaultTighteningForTruncation = YES;
 #endif
-	
-	if(@available(macOS 11.0, *))
-	{
-		_settingsMenuButton.image = [NSImage imageWithSystemSymbolName:@"gearshape.2.fill" accessibilityDescription:nil];
-		_settingsButton.image = [NSImage imageWithSystemSymbolName:@"gearshape.2.fill" accessibilityDescription:nil];
-	}
 }
 
 - (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle

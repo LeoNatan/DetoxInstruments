@@ -16,6 +16,11 @@
 	return YES;
 }
 
+- (BOOL)allowsVibrancy
+{
+	return YES;
+}
+
 - (void)awakeFromNib
 {
 	[super awakeFromNib];
@@ -52,8 +57,8 @@
 //	[line moveToPoint:NSMakePoint(0, 0.5)];
 //	[line lineToPoint:NSMakePoint(self.bounds.size.width, 0.5)];
 	
-	[line moveToPoint:NSMakePoint(_tableView.tableColumns.firstObject.width + 0.5, 1)];
-	[line lineToPoint:NSMakePoint(_tableView.tableColumns.firstObject.width + 0.5, self.bounds.size.height)];
+	[line moveToPoint:NSMakePoint(_tableView.tableColumns.firstObject.width, 0)];
+	[line lineToPoint:NSMakePoint(_tableView.tableColumns.firstObject.width, self.bounds.size.height)];
 	
 	line.lineWidth = 1;
 	[line stroke];

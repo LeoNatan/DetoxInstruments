@@ -43,6 +43,14 @@
 	}
 }
 
+- (void)viewDidAppear
+{
+	[super viewDidAppear];
+	
+	NSView* separator = self.view.superview.subviews.lastObject;
+	separator.hidden = YES;
+}
+
 - (NSView *)headerView
 {
 	return self.view.subviews.lastObject;
